@@ -1,0 +1,25 @@
+##fileformat=VCFv4.2
+##source=GWASena_dummy_generator
+##INFO=<ID=NOTE,Number=1,Type=String,Description="Data dummy untuk uji alur, bukan data biologis">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##contig=<ID=chr1>
+##contig=<ID=chr2>
+##contig=<ID=chr3>
+##contig=<ID=chr4>
+##contig=<ID=chr5>
+##contig=<ID=chr6>
+##contig=<ID=chr7>
+##contig=<ID=chr8>
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	BP001	BP002	BP003	BP004	BP005	BP006
+chr1	439563	snp001	C	G	.	PASS	NOTE=dummy	GT	./.	0/0	0/0	0/1	0/0	1/1
+chr1	1150660	snp002	A	T	.	PASS	NOTE=dummy	GT	0/1	0/0	0/0	0/0	0/0	0/0
+chr2	352353	snp003	A	T	.	PASS	NOTE=dummy	GT	0/0	0/0	0/1	0/0	0/1	./.
+chr2	1110264	snp004	A	T	.	PASS	NOTE=dummy	GT	0/1	0/0	0/0	0/1	0/0	0/1
+chr3	239643	snp005	G	C	.	PASS	NOTE=dummy	GT	0/1	0/1	0/0	0/1	1/1	0/1
+chr4	815131	snp006	C	A	.	PASS	NOTE=dummy	GT	0/1	0/1	./.	0/1	1/1	0/0
+chr4	1489482	snp007	A	T	.	PASS	NOTE=dummy	GT	0/0	0/1	0/1	0/0	./.	0/1
+chr5	548363	snp008	G	C	.	PASS	NOTE=dummy	GT	0/1	0/0	1/1	1/1	0/1	0/1
+chr6	832948	snp009	C	A	.	PASS	NOTE=dummy	GT	0/1	1/1	0/1	0/0	1/1	./.
+chr7	570636	snp010	G	T	.	PASS	NOTE=dummy	GT	0/0	0/0	0/1	0/0	0/1	1/1
+chr8	259367	snp011	T	C	.	PASS	NOTE=dummy	GT	0/0	./.	0/0	0/1	0/1	1/1
+chr8	716011	snp012	G	T	.	PASS	NOTE=dummy	GT	0/0	0/1	0/0	0/0	0/0	1/1
