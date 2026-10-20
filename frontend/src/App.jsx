@@ -3,6 +3,13 @@ import Stepper from "./components/Stepper.jsx";
 import StatusPanel from "./components/StatusPanel.jsx";
 import { api } from "./services/api.js";
 
+const STATUS_LABEL = {
+  berfungsi: "berfungsi",
+  sebagian: "sebagian",
+  kerangka: "kerangka siap",
+  belum: "belum dibuat",
+};
+
 export default function App() {
   const [health, setHealth] = useState(null);
   const [meta, setMeta] = useState(null);
@@ -45,8 +52,8 @@ export default function App() {
 
         <h1>Analisis GWAS bawang putih</h1>
         <p className="lead">
-          Kerangka aplikasi sudah terhubung. Tahap unggah dan validasi berkas VCF/PLINK dan CSV
-          fenotipe mulai dikerjakan pada Minggu 6.
+          Fitur awal backend (login, daftar analisis, serta unggah dan validasi berkas) sudah
+          berfungsi dan dapat dicoba melalui Swagger UI di http://localhost:8000/docs.
         </p>
 
         <StatusPanel health={health} error={error} loading={loading} onRefresh={load} />
@@ -76,9 +83,7 @@ export default function App() {
                 <li key={m.id}>
                   <span className="mod-id">{m.id}</span>
                   <span>{m.nama}</span>
-                  <span className={`badge ${m.status}`}>
-                    {m.status === "kerangka" ? "kerangka siap" : "belum dibuat"}
-                  </span>
+                  <span className={`badge ${m.status}`}>{STATUS_LABEL[m.status] || m.status}</span>
                 </li>
               ))}
             </ul>
