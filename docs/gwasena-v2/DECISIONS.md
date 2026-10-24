@@ -1,0 +1,18 @@
+# DECISIONS.md — Catatan Keputusan Arsitektur & Desain GWASena 2.0
+
+## 1. Daftar Keputusan yang Telah Disetujui (Approved Decisions)
+
+| ID | Topik Keputusan | Keputusan Final | Alasan & Dampak Teknis |
+|---|---|---|---|
+| **DEC-01** | Sinkronisasi Cabang Git (`origin/develop`) | **Wajib melakukan merge/rebase dari `origin/develop` ke branch kerja lokal sebelum implementasi UI.** | Audit Antigravity menemukan branch lokal `feature/upload-step` tertinggal dari `origin/develop` (PR #19) yang sudah berisi backend Auth JWT, validasi VCF/CSV Python, dan sampel data bawang putih. |
+| **DEC-02** | Stack Frontend | **Pertahankan React 18 + Vite (JS/JSX), tambahkan Tailwind CSS, React Router DOM, Zustand, Lucide React, dan Plotly/ECharts.** | Menjaga kompatibilitas dengan repositori tim sembari menutup celah ketiadaan router, sistem styling, state management, dan engine grafik ilmiah. |
+| **DEC-03** | Pengalaman Pengguna Baru (Onboarding) | **Opsi A — Hybrid Onboarding (Copilot-style Intro + Session Check + `localStorage` Flag).** | Memberikan pengalaman pengenalan yang berkelas bagi pengunjung baru tanpa memaksa pengguna lama menonton intro berulang kali, serta tanpa mengubah skema tabel `users` di backend. |
+| **DEC-04** | Arah Visual & Tema | **Precision Bioluminescence & Editorial Science (Dark-First Onboarding/Auth + Dual-Theme Light/Dark Workspace).** | Menyelaraskan warna Logo resmi GWASena dan video DNA 3D dengan kebutuhan keterbacaan tabel/plot ilmiah di ruang kerja. |
+| **DEC-05** | Aturan Video DNA 3D (`Source 3`) | **Digunakan secara selektif hanya pada S-00 (Intro), S-01 (Login), S-02 (Register), dan aksen banner S-06.** | Mencegah gangguan fokus visual dan beban GPU pada halaman padat data (S-04, S-05, S-07, S-08, S-10). Menggantikan aturan lama di `DESIGN.md` v1 yang melarang 3D. |
+| **DEC-06** | Format Berkas Genotipe Fase Ini | **Fokuskan validasi aktif pada `.vcf` dan `.vcf.gz` sesuai dukungan backend saat ini.** | Backend `dataset_service.py` pada PR #19 secara eksplisit menolak `.bed/.bim/.fam` dengan HTTP 422. UI memberikan informasi jelas agar pengguna mengunggah `.vcf`/`.vcf.gz`. |
+| **DEC-07** | Peningkatan UX Client-Side & Navigasi Hasil | **Izinkan sorting, pencarian, dan pagination di sisi klien pada tabel, serta navigasi bebas antar Langkah 4 (S-07), 5 (S-08), dan 6 (S-09).** | Mencabut larangan kaku pada `DESIGN.md` lama demi mencegah *browser freeze* pada ribuan SNP dan memudahkan peneliti meninjau plot, anotasi gen, serta ekspor. |
+| **DEC-08** | Prioritas Layar Administrator (S-11) | **Ditangguhkan (Out of Initial Scope). Fokus penuh pada S-00 s.d. S-10.** | Di SKPL berstatus *Could Have* dan di backend belum ada router `/api/admin/*`. |
+
+## 2. Daftar Ketergantungan Backend yang Menunggu Penyelesaian Tim (Open Backend Items)
+1. **Endpoint `PUT /api/analyses/{id}/parameters`, `POST /run`, `GET /status`, dan `GET /results`:** Saat ini di backend masih berstatus stub `501 Not Implemented` (dijadwalkan pada Sprint/Minggu berikutnya sesuai pesan respons backend). Frontend menyiapkan service layer yang patuh penuh pada kontrak JSON dan menyediakan penanganan status `501` yang transparan.
+2. **Integrasi Anotasi Gen Bawang Putih (M-07):** Tim backend/pipeline sedang menyiapkan fallback pembacaan berkas `.gff3` lokal selain Ensembl Plants REST API. Frontend merancang komponen S-08 dengan dukungan penuh *non-blocking state* (`AC-07.2`).
