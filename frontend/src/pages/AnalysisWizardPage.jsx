@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   ArrowLeft,
   Loader2,
+  Dna,
 } from 'lucide-react';
 import { analysisService } from '../services/analysisService.js';
 import { useAnalysisStore } from '../store/useAnalysisStore.js';
@@ -18,8 +19,8 @@ import AccessDeniedState from '../components/common/AccessDeniedState.jsx';
 import ErrorMessageArea from '../components/common/ErrorMessageArea.jsx';
 
 /**
- * AnalysisWizardPage - Kontainer Orkestrasi Sesi Analisis GWAS (S-04 s.d. S-09)
- * Acuan: docs/gwasena-v2/USER_FLOW.md & WIREFRAME.md
+ * AnalysisWizardPage - Kontainer Orkestrasi Sesi Analisis GWAS (S-04 s.d. S-09) (Figma Aligned)
+ * Acuan: 04c — Unggah_ Valid (Boleh Lanjut).png & 06 — Komputasi_ QC Berjalan.png
  */
 export default function AnalysisWizardPage() {
   const { id } = useParams();
@@ -71,8 +72,8 @@ export default function AnalysisWizardPage() {
   if (isLoading) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center p-8">
-        <Loader2 className="h-8 w-8 animate-spin text-accent-cyan mb-2" />
-        <p className="text-xs text-text-muted">Memuat sesi analisis #{id}...</p>
+        <Loader2 className="h-8 w-8 animate-spin text-[#06B6D4] mb-2" />
+        <p className="text-xs text-slate-500 dark:text-slate-400">Memuat sesi analisis #{id}...</p>
       </div>
     );
   }
@@ -85,22 +86,22 @@ export default function AnalysisWizardPage() {
   return (
     <div className="space-y-6 pb-16 animate-fade-in">
       {/* ── Top Session Bar ── */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border-subtle pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-white/10 pb-4">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <Link
               to="/dashboard"
-              className="inline-flex items-center gap-1 text-xs text-text-muted hover:text-text-primary transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
             >
               <ArrowLeft className="h-3.5 w-3.5" />
               <span>Dashboard</span>
             </Link>
-            <span className="text-text-muted">/</span>
-            <span className="font-mono text-xs text-accent-cyan font-semibold">Sesi #{id}</span>
+            <span className="text-slate-400 dark:text-slate-500">/</span>
+            <span className="font-mono text-xs text-cyan-700 dark:text-[#06B6D4] font-semibold">Sesi #{id}</span>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-text-primary">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
               {currentAnalysis?.analysis_name || `Analisis GWAS #${id}`}
             </h1>
 
@@ -117,7 +118,7 @@ export default function AnalysisWizardPage() {
 
             {/* Simulation Badge if active */}
             {isSimulated && (
-              <span className="rounded-full bg-status-warning/20 border border-status-warning/40 px-2.5 py-0.5 text-[11px] font-bold text-status-warning">
+              <span className="rounded-full bg-amber-100 dark:bg-amber-500/20 border border-amber-300 dark:border-amber-500/40 px-2.5 py-0.5 text-[11px] font-bold text-amber-800 dark:text-amber-300">
                 Simulasi UI Aktif
               </span>
             )}
@@ -125,23 +126,29 @@ export default function AnalysisWizardPage() {
         </div>
 
         <div className="flex items-center gap-2 self-start sm:self-auto">
-          <span className="text-xs italic text-text-muted">
-            {currentAnalysis?.organism || 'Allium sativum L.'}
-          </span>
+          <div className="rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0F172E]/60 px-3 py-1.5 text-xs text-slate-500 dark:text-slate-400">
+            <span className="italic font-medium text-slate-700 dark:text-slate-300">
+              {currentAnalysis?.organism || 'Allium sativum L.'}
+            </span>{' '}
+            <span className="text-[11px]">(2n=16)</span>
+          </div>
         </div>
       </div>
 
       <ErrorMessageArea error={error} onDismiss={() => setError(null)} />
 
-      {/* ── Wizard Stepper 6 Langkah ── */}
+      {/* ── Wizard Stepper 6 Langkah (Figma Unified Pill) ── */}
       <WizardStepper
         activeStep={activeStep}
         onStepClick={(stepNum) => setActiveStep(stepNum)}
         status={currentAnalysis?.status}
       />
 
-      {/* ── Konten Langkah Aktif ── */}
-      <div className="rounded-3xl border border-border-subtle bg-surface/80 p-6 sm:p-8 shadow-xl backdrop-blur-md">
+      {/* ── Konten Langkah Aktif (Dengan Transisi Antar-Langkah GPU) ── */}
+      <div
+        key={activeStep}
+        className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#121B38]/85 p-6 sm:p-8 shadow-2xl backdrop-blur-md animate-step-transition"
+      >
         {activeStep === 1 && (
           <Step1Upload
             analysisId={id}

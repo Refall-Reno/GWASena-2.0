@@ -23,9 +23,9 @@ export default function ManhattanPlot({
 
     const isDark = theme === 'dark';
 
-    // Warna untuk Dark vs Light Mode sesuai DESIGN.md Bagian 7
-    const colorEven = isDark ? '#38BDF8' : '#0284C7'; // Sky
-    const colorOdd = isDark ? '#818CF8' : '#6366F1';  // Indigo
+    // Warna untuk Dark vs Light Mode sesuai spesifikasi kontras tinggi
+    const colorEven = isDark ? '#38BDF8' : '#2563EB'; // Royal Blue di Light Mode
+    const colorOdd = isDark ? '#818CF8' : '#4F46E5';  // Indigo di Light Mode
     const colorSignificant = isDark ? '#34D399' : '#059669'; // Emerald
     const colorSelected = '#F43F5E'; // Rose-500
 
@@ -183,7 +183,7 @@ export default function ManhattanPlot({
         font: {
           family: 'Plus Jakarta Sans, sans-serif',
           size: 11,
-          color: isDark ? '#94A3B8' : '#475569',
+          color: isDark ? '#94A3B8' : '#1E293B',
         },
       },
       xaxis: {
@@ -192,7 +192,7 @@ export default function ManhattanPlot({
           font: {
             family: 'Plus Jakarta Sans, sans-serif',
             size: 12,
-            color: isDark ? '#94A3B8' : '#64748B',
+            color: isDark ? '#94A3B8' : '#1E293B',
           },
         },
         tickvals: tickVals,
@@ -200,10 +200,11 @@ export default function ManhattanPlot({
         tickfont: {
           family: 'Plus Jakarta Sans, sans-serif',
           size: 11,
-          color: isDark ? '#E2E8F0' : '#334155',
+          color: isDark ? '#E2E8F0' : '#1E293B',
         },
         showgrid: true,
         gridcolor: isDark ? '#1E293B' : '#E2E8F0',
+        linecolor: isDark ? '#334155' : '#94A3B8',
         zeroline: false,
       },
       yaxis: {
@@ -212,17 +213,18 @@ export default function ManhattanPlot({
           font: {
             family: 'Plus Jakarta Sans, sans-serif',
             size: 12,
-            color: isDark ? '#94A3B8' : '#64748B',
+            color: isDark ? '#94A3B8' : '#1E293B',
           },
         },
         range: [0, Math.ceil(maxY) + 0.5],
         tickfont: {
           family: 'JetBrains Mono, monospace',
           size: 11,
-          color: isDark ? '#E2E8F0' : '#334155',
+          color: isDark ? '#E2E8F0' : '#1E293B',
         },
         showgrid: true,
         gridcolor: isDark ? '#1E293B' : '#E2E8F0',
+        linecolor: isDark ? '#334155' : '#94A3B8',
         zeroline: false,
       },
       // Garis Ambang Signifikansi (Threshold Line)
@@ -316,7 +318,7 @@ export default function ManhattanPlot({
   }, [snps, threshold, theme, selectedSnpId, onSelectSnp]);
 
   return (
-    <div className="w-full overflow-hidden rounded-2xl border border-border-subtle bg-surface p-2 sm:p-4 shadow-sm">
+    <div className="w-full overflow-hidden rounded-2xl border border-slate-300 dark:border-white/10 bg-white dark:bg-[#0F172E] p-2 sm:p-4 shadow-sm">
       <div ref={containerRef} className="h-[420px] w-full" />
     </div>
   );

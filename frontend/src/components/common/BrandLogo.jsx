@@ -4,19 +4,19 @@ export default function BrandLogo({ size = 'md', showTagline = true, className =
   const [imgError, setImgError] = useState(false);
 
   const heights = {
-    sm: 'h-7',
-    md: 'h-9',
-    lg: 'h-12',
-    xl: 'h-16',
+    sm: 'h-8 sm:h-9',
+    md: 'h-10 sm:h-11',
+    lg: 'h-14 sm:h-16',
+    xl: 'h-20 sm:h-24',
   };
 
   if (!imgError) {
     return (
       <div className={`flex items-center gap-2.5 ${className}`}>
         <img
-          src="/assets/logo-gwasena.png"
+          src="/assets/figma/logo-official.png"
           alt="GWASena - From Genotype to Discovery"
-          className={`${heights[size] || heights.md} w-auto object-contain select-none`}
+          className={`${heights[size] || heights.md} w-auto object-contain select-none transition-all drop-shadow-[0_2px_10px_rgba(6,182,212,0.15)]`}
           onError={() => setImgError(true)}
         />
       </div>

@@ -4,7 +4,6 @@ import {
   FileText,
   Dna,
   CheckCircle2,
-  AlertCircle,
   FileCheck2,
   ArrowRight,
   Loader2,
@@ -15,9 +14,9 @@ import { analysisService } from '../../services/analysisService.js';
 import ErrorMessageArea from '../common/ErrorMessageArea.jsx';
 
 /**
- * S-04: Step1Upload (Unggah & Validasi Data Genomik)
+ * S-04: Step1Upload (Unggah & Validasi Data Genomik - Figma Aligned)
  * Modul: M-02 (FR-02, FR-11, BR-01, BR-02)
- * Acuan: docs/gwasena-v2/WIREFRAME.md Layar S-04 & API_INTEGRATION.md
+ * Acuan: 04 — Unggah Berkas & Validasi (Kosong).png & 04c — Unggah_ Valid (Boleh Lanjut).png
  */
 export default function Step1Upload({ analysisId, onUploadSuccess, onNext }) {
   const [genotypeFile, setGenotypeFile] = useState(null);
@@ -50,7 +49,7 @@ export default function Step1Upload({ analysisId, onUploadSuccess, onNext }) {
     }
     setError(null);
     setGenotypeFile(file);
-    setUploadResult(null); // Reset hasil jika ganti file
+    setUploadResult(null);
   };
 
   // Validasi ekstensi fenotipe (.csv)
@@ -99,11 +98,11 @@ export default function Step1Upload({ analysisId, onUploadSuccess, onNext }) {
   return (
     <div className="space-y-6 animate-fade-in">
       {/* ── Header Langkah ── */}
-      <div className="border-b border-border-subtle pb-4">
-        <h2 className="text-xl font-bold tracking-tight text-text-primary">
+      <div className="border-b border-slate-200 dark:border-white/10 pb-4">
+        <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
           1. Unggah & Validasi Dataset Bawang Putih
         </h2>
-        <p className="mt-1 text-xs sm:text-sm text-text-secondary leading-relaxed">
+        <p className="mt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
           Unggah data genotipe (varian SNP) dan data fenotipe (pengamatan sifat agronomi). Sistem
           akan memeriksa integritas format dan mencocokkan kesamaan 100% <em>Sample ID</em> (BR-02).
         </p>
@@ -126,40 +125,42 @@ export default function Step1Upload({ analysisId, onUploadSuccess, onNext }) {
               setIsDraggingGeno(false);
               if (e.dataTransfer.files?.[0]) handleGenotypeSelect(e.dataTransfer.files[0]);
             }}
-            className={`flex flex-col justify-between rounded-2xl border-2 border-dashed p-6 transition-all ${
+            className={`flex flex-col justify-between rounded-3xl border-2 border-dashed p-6 transition-all ${
               isDraggingGeno
-                ? 'border-accent-cyan bg-accent-cyan/10 scale-[1.005]'
+                ? 'border-[#06B6D4] bg-[#06B6D4]/10 scale-[1.005]'
                 : genotypeFile
-                ? 'border-status-success/50 bg-status-success/5'
-                : 'border-border-strong bg-surface hover:border-text-secondary'
+                ? 'border-emerald-500/50 bg-emerald-500/5'
+                : 'border-slate-300 dark:border-white/15 bg-slate-50 dark:bg-[#0F172E]/60 hover:border-[#5B4DFE] hover:bg-indigo-50/30 dark:hover:bg-white/5'
             }`}
           >
             <div>
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <Dna className="h-5 w-5 text-accent-cyan" />
-                  <span className="text-sm font-bold text-text-primary">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#06B6D4]/15 text-[#06B6D4]">
+                    <Dna className="h-4 w-4" />
+                  </div>
+                  <span className="text-sm font-bold text-slate-900 dark:text-white">
                     Berkas Genotipe (VCF)
                   </span>
                 </div>
-                <span className="text-[11px] font-mono rounded-md bg-surface-elevated px-2 py-0.5 text-text-muted">
+                <span className="text-[11px] font-mono rounded-lg border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-[#162142] px-2.5 py-0.5 text-slate-700 dark:text-slate-300">
                   .vcf / .vcf.gz
                 </span>
               </div>
 
-              <p className="text-xs text-text-secondary mb-4 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
                 Format VCF standar (bialelik) berisi varian penanda SNP genom bawang putih (8 kromosom).
               </p>
 
               {genotypeFile ? (
-                <div className="flex items-center justify-between rounded-xl border border-status-success/30 bg-surface p-3">
+                <div className="flex items-center justify-between rounded-2xl border border-emerald-300 dark:border-emerald-500/30 bg-emerald-50 dark:bg-[#121B38] p-3.5 shadow-sm animate-pop-in">
                   <div className="flex items-center gap-2.5 truncate">
-                    <FileCheck2 className="h-5 w-5 text-status-success shrink-0" />
+                    <FileCheck2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                     <div className="truncate">
-                      <div className="text-xs font-semibold text-text-primary truncate">
+                      <div className="text-xs font-semibold text-slate-900 dark:text-white truncate">
                         {genotypeFile.name}
                       </div>
-                      <div className="text-[11px] font-mono text-text-muted">
+                      <div className="text-[11px] font-mono text-slate-600 dark:text-slate-400">
                         {(genotypeFile.size / (1024 * 1024)).toFixed(2)} MB
                       </div>
                     </div>
@@ -170,7 +171,7 @@ export default function Step1Upload({ analysisId, onUploadSuccess, onNext }) {
                       setGenotypeFile(null);
                       setUploadResult(null);
                     }}
-                    className="p-1 rounded-lg text-text-muted hover:bg-surface-elevated hover:text-text-primary"
+                    className="p-1 rounded-lg text-slate-400 hover:bg-slate-200 dark:hover:bg-white/10 hover:text-slate-700 dark:hover:text-white active:scale-95 transition-all"
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -178,13 +179,13 @@ export default function Step1Upload({ analysisId, onUploadSuccess, onNext }) {
               ) : (
                 <div
                   onClick={() => genoInputRef.current?.click()}
-                  className="flex flex-col items-center justify-center p-6 rounded-xl border border-border-subtle bg-surface-elevated/40 cursor-pointer hover:bg-surface-elevated/80 transition-colors text-center"
+                  className="flex flex-col items-center justify-center p-6 rounded-2xl border border-slate-300 dark:border-white/10 bg-white dark:bg-[#0F172E]/50 cursor-pointer hover:bg-slate-50 dark:hover:bg-white/5 active:scale-[0.99] transition-all text-center group"
                 >
-                  <UploadCloud className="h-8 w-8 text-text-muted mb-2" />
-                  <span className="text-xs font-semibold text-text-primary">
+                  <UploadCloud className="h-8 w-8 text-[#06B6D4] mb-2 group-hover:scale-110 transition-transform" />
+                  <span className="text-xs font-semibold text-slate-800 dark:text-white">
                     Pilih atau Seret Berkas VCF ke Sini
                   </span>
-                  <span className="mt-1 text-[11px] text-text-muted">Maksimal 200 MB</span>
+                  <span className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">Maksimal 200 MB</span>
                 </div>
               )}
 
@@ -199,8 +200,8 @@ export default function Step1Upload({ analysisId, onUploadSuccess, onNext }) {
               />
             </div>
 
-            <div className="mt-4 pt-3 border-t border-border-subtle text-[11px] text-text-muted flex items-center gap-1.5">
-              <Info className="h-3.5 w-3.5 shrink-0 text-accent-cyan" />
+            <div className="mt-4 pt-3 border-t border-slate-200 dark:border-white/10 text-[11px] text-slate-600 dark:text-slate-400 flex items-center gap-1.5">
+              <Info className="h-3.5 w-3.5 shrink-0 text-[#06B6D4]" />
               <span>Format PLINK biner (.bed/.bim/.fam) belum didukung pada rilis ini.</span>
             </div>
           </div>
@@ -217,40 +218,42 @@ export default function Step1Upload({ analysisId, onUploadSuccess, onNext }) {
               setIsDraggingPheno(false);
               if (e.dataTransfer.files?.[0]) handlePhenotypeSelect(e.dataTransfer.files[0]);
             }}
-            className={`flex flex-col justify-between rounded-2xl border-2 border-dashed p-6 transition-all ${
+            className={`flex flex-col justify-between rounded-3xl border-2 border-dashed p-6 transition-all ${
               isDraggingPheno
-                ? 'border-accent-cyan bg-accent-cyan/10 scale-[1.005]'
+                ? 'border-[#5B4DFE] bg-[#5B4DFE]/10 scale-[1.005]'
                 : phenotypeFile
-                ? 'border-status-success/50 bg-status-success/5'
-                : 'border-border-strong bg-surface hover:border-text-secondary'
+                ? 'border-emerald-500/50 bg-emerald-500/5'
+                : 'border-slate-300 dark:border-white/15 bg-slate-50 dark:bg-[#0F172E]/60 hover:border-[#5B4DFE] hover:bg-indigo-50/30 dark:hover:bg-white/5'
             }`}
           >
             <div>
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <FileText className="h-5 w-5 text-accent-indigo" />
-                  <span className="text-sm font-bold text-text-primary">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#5B4DFE]/15 text-[#5B4DFE]">
+                    <FileText className="h-4 w-4" />
+                  </div>
+                  <span className="text-sm font-bold text-slate-900 dark:text-white">
                     Berkas Fenotipe (CSV)
                   </span>
                 </div>
-                <span className="text-[11px] font-mono rounded-md bg-surface-elevated px-2 py-0.5 text-text-muted">
+                <span className="text-[11px] font-mono rounded-lg border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-[#162142] px-2.5 py-0.5 text-slate-700 dark:text-slate-300">
                   .csv
                 </span>
               </div>
 
-              <p className="text-xs text-text-secondary mb-4 leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-400 mb-4 leading-relaxed">
                 Tabel CSV memuat kolom ID sampel (<code>sample_id</code>) dan minimal 1 kolom sifat numerik (mis. <code>bobot_umbi_g</code>).
               </p>
 
               {phenotypeFile ? (
-                <div className="flex items-center justify-between rounded-xl border border-status-success/30 bg-surface p-3">
+                <div className="flex items-center justify-between rounded-2xl border border-emerald-300 dark:border-emerald-500/30 bg-emerald-50 dark:bg-[#121B38] p-3.5 shadow-sm animate-pop-in">
                   <div className="flex items-center gap-2.5 truncate">
-                    <FileCheck2 className="h-5 w-5 text-status-success shrink-0" />
+                    <FileCheck2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                     <div className="truncate">
-                      <div className="text-xs font-semibold text-text-primary truncate">
+                      <div className="text-xs font-semibold text-slate-900 dark:text-white truncate">
                         {phenotypeFile.name}
                       </div>
-                      <div className="text-[11px] font-mono text-text-muted">
+                      <div className="text-[11px] font-mono text-slate-600 dark:text-slate-400">
                         {(phenotypeFile.size / 1024).toFixed(1)} KB
                       </div>
                     </div>
@@ -261,7 +264,7 @@ export default function Step1Upload({ analysisId, onUploadSuccess, onNext }) {
                       setPhenotypeFile(null);
                       setUploadResult(null);
                     }}
-                    className="p-1 rounded-lg text-text-muted hover:bg-surface-elevated hover:text-text-primary"
+                    className="p-1 rounded-lg text-slate-400 hover:bg-slate-200 dark:hover:bg-white/10 hover:text-slate-700 dark:hover:text-white active:scale-95 transition-all"
                   >
                     <X className="h-4 w-4" />
                   </button>
@@ -269,13 +272,13 @@ export default function Step1Upload({ analysisId, onUploadSuccess, onNext }) {
               ) : (
                 <div
                   onClick={() => phenoInputRef.current?.click()}
-                  className="flex flex-col items-center justify-center p-6 rounded-xl border border-border-subtle bg-surface-elevated/40 cursor-pointer hover:bg-surface-elevated/80 transition-colors text-center"
+                  className="flex flex-col items-center justify-center p-6 rounded-2xl border border-slate-300 dark:border-white/10 bg-white dark:bg-[#0F172E]/50 cursor-pointer hover:bg-slate-50 dark:hover:bg-white/5 active:scale-[0.99] transition-all text-center group"
                 >
-                  <UploadCloud className="h-8 w-8 text-text-muted mb-2" />
-                  <span className="text-xs font-semibold text-text-primary">
+                  <UploadCloud className="h-8 w-8 text-[#5B4DFE] mb-2 group-hover:scale-110 transition-transform" />
+                  <span className="text-xs font-semibold text-slate-800 dark:text-white">
                     Pilih atau Seret Berkas CSV ke Sini
                   </span>
-                  <span className="mt-1 text-[11px] text-text-muted">Encoding UTF-8</span>
+                  <span className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">Encoding UTF-8</span>
                 </div>
               )}
 
@@ -290,19 +293,19 @@ export default function Step1Upload({ analysisId, onUploadSuccess, onNext }) {
               />
             </div>
 
-            <div className="mt-4 pt-3 border-t border-border-subtle text-[11px] text-text-muted flex items-center gap-1.5">
-              <Info className="h-3.5 w-3.5 shrink-0 text-accent-indigo" />
+            <div className="mt-4 pt-3 border-t border-slate-200 dark:border-white/10 text-[11px] text-slate-600 dark:text-slate-400 flex items-center gap-1.5">
+              <Info className="h-3.5 w-3.5 shrink-0 text-[#5B4DFE]" />
               <span>Contoh kolom sifat: bobot_umbi_g, diameter_umbi_mm, jumlah_siung.</span>
             </div>
           </div>
         </div>
 
-        {/* Tombol Unggah & Validasi */}
-        <div className="flex justify-center">
+        {/* Tombol Unggah & Validasi (Figma Primary CTA) */}
+        <div className="flex justify-center pt-2">
           <button
             type="submit"
             disabled={isUploading || !genotypeFile || !phenotypeFile}
-            className="inline-flex items-center gap-2 rounded-xl bg-accent-primary px-6 py-3 text-sm font-bold text-white shadow-lg hover:bg-accent-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#5B4DFE] px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#5B4DFE]/30 hover:bg-[#4F46E5] hover:-translate-y-[1px] hover:shadow-xl active:scale-[0.97] active:brightness-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none transition-all duration-100"
           >
             {isUploading ? (
               <>
@@ -319,60 +322,60 @@ export default function Step1Upload({ analysisId, onUploadSuccess, onNext }) {
         </div>
       </form>
 
-      {/* ── Panel Hasil Validasi Sukses (200 OK - AC-02.1) ── */}
+      {/* ── Panel Hasil Validasi Sukses (200 OK - AC-02.1 with Reveal Animation) ── */}
       {uploadResult && (
-        <div className="rounded-2xl border border-status-success/40 bg-status-success/10 p-5 sm:p-6 shadow-xl backdrop-blur-md animate-fade-in space-y-4">
-          <div className="flex items-center justify-between border-b border-status-success/20 pb-3">
-            <div className="flex items-center gap-2.5">
-              <CheckCircle2 className="h-6 w-6 text-status-success shrink-0" />
+        <div className="rounded-3xl border border-emerald-300 dark:border-emerald-500/40 bg-emerald-50 dark:bg-emerald-500/10 p-5 sm:p-7 shadow-xl backdrop-blur-md animate-pop-in space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-emerald-200 dark:border-emerald-500/20 pb-3.5">
+            <div className="flex items-center gap-3">
+              <CheckCircle2 className="h-6 w-6 text-emerald-600 dark:text-emerald-400 shrink-0" />
               <div>
-                <h3 className="text-base font-bold text-text-primary">
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">
                   Validasi Dataset Berhasil! (100% Sample ID Cocok)
                 </h3>
-                <span className="text-xs text-status-success font-medium">
+                <span className="text-xs text-emerald-800 dark:text-emerald-400 font-medium">
                   {uploadResult.pesan || 'Berkas valid dan siap dikonfigurasi.'}
                 </span>
               </div>
             </div>
-            <span className="rounded-full bg-status-success/20 px-3 py-1 text-xs font-bold text-status-success border border-status-success/30">
+            <span className="self-start sm:self-auto rounded-full bg-emerald-100 dark:bg-emerald-500/20 px-3.5 py-1 text-xs font-bold text-emerald-800 dark:text-emerald-400 border border-emerald-300 dark:border-emerald-500/30">
               Status: Tervalidasi
             </span>
           </div>
 
           {/* Grid Metrik Dataset */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div className="rounded-xl border border-border-subtle bg-surface p-3 text-center">
-              <span className="text-[11px] text-text-muted uppercase font-medium">
+            <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0F172E]/70 p-3.5 text-center shadow-sm">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-medium">
                 Sampel Cocok
               </span>
-              <div className="font-mono text-xl font-bold text-accent-cyan tabular-nums mt-1">
+              <div className="font-mono text-xl font-bold text-[#5B4DFE] dark:text-[#06B6D4] tabular-nums mt-1">
                 {uploadResult.genotipe?.jumlah_sampel || uploadResult.kecocokan_sample_id?.jumlah_sampel_cocok || 0}
               </div>
             </div>
 
-            <div className="rounded-xl border border-border-subtle bg-surface p-3 text-center">
-              <span className="text-[11px] text-text-muted uppercase font-medium">
+            <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0F172E]/70 p-3.5 text-center shadow-sm">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-medium">
                 Jumlah SNP
               </span>
-              <div className="font-mono text-xl font-bold text-text-primary tabular-nums mt-1">
+              <div className="font-mono text-xl font-bold text-slate-900 dark:text-white tabular-nums mt-1">
                 {uploadResult.genotipe?.jumlah_snp || 0}
               </div>
             </div>
 
-            <div className="rounded-xl border border-border-subtle bg-surface p-3 text-center">
-              <span className="text-[11px] text-text-muted uppercase font-medium">
+            <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0F172E]/70 p-3.5 text-center shadow-sm">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-medium">
                 Varian Dilewati
               </span>
-              <div className="font-mono text-xs font-semibold text-text-muted mt-2">
+              <div className="font-mono text-xs font-semibold text-slate-600 dark:text-slate-400 mt-2">
                 {uploadResult.genotipe?.varian_dilewati?.multialelik || 0} Multialelik
               </div>
             </div>
 
-            <div className="rounded-xl border border-border-subtle bg-surface p-3 text-center">
-              <span className="text-[11px] text-text-muted uppercase font-medium">
+            <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0F172E]/70 p-3.5 text-center shadow-sm">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-medium">
                 Varietas Tercatat
               </span>
-              <div className="font-mono text-xl font-bold text-accent-indigo tabular-nums mt-1">
+              <div className="font-mono text-xl font-bold text-[#5B4DFE] tabular-nums mt-1">
                 {uploadResult.fenotipe?.varietas_tercatat || 0}
               </div>
             </div>
@@ -380,15 +383,15 @@ export default function Step1Upload({ analysisId, onUploadSuccess, onNext }) {
 
           {/* Sifat Fenotipe Tersedia */}
           {uploadResult.fenotipe?.sifat_tersedia && (
-            <div className="rounded-xl border border-border-subtle bg-surface p-3.5 space-y-2">
-              <span className="text-xs font-semibold text-text-secondary block">
+            <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-[#0F172E]/60 p-4 space-y-2 shadow-sm">
+              <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 block">
                 Sifat Fenotipe yang Terdeteksi dalam CSV:
               </span>
               <div className="flex flex-wrap gap-2">
                 {uploadResult.fenotipe.sifat_tersedia.map((trait) => (
                   <span
                     key={trait}
-                    className="inline-flex items-center gap-1 rounded-lg border border-accent-cyan/30 bg-accent-cyan/10 px-2.5 py-1 text-xs font-mono font-medium text-accent-cyan"
+                    className="inline-flex items-center gap-1 rounded-xl border border-cyan-300 dark:border-[#06B6D4]/30 bg-cyan-50 dark:bg-[#06B6D4]/10 px-3 py-1 text-xs font-mono font-medium text-cyan-900 dark:text-[#06B6D4]"
                   >
                     <span>{trait}</span>
                   </span>
@@ -398,11 +401,11 @@ export default function Step1Upload({ analysisId, onUploadSuccess, onNext }) {
           )}
 
           {/* Tombol Lanjut ke Step 2 */}
-          <div className="flex justify-end pt-2">
+          <div className="flex justify-end pt-3">
             <button
               type="button"
               onClick={onNext}
-              className="inline-flex items-center gap-2 rounded-xl bg-accent-primary px-6 py-3 text-sm font-bold text-white shadow-md hover:bg-accent-primary/90 focus:outline-none focus:ring-2 focus:ring-accent-primary/50 transition-all"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#5B4DFE] px-6 py-3 text-sm font-bold text-white shadow-lg shadow-[#5B4DFE]/30 hover:bg-[#4F46E5] hover:-translate-y-[1px] hover:shadow-xl active:scale-[0.97] active:brightness-95 transition-all duration-100"
             >
               <span>Lanjut ke Konfigurasi Parameter (Langkah 2)</span>
               <ArrowRight className="h-4 w-4" />

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, Lock, User, Mail, ArrowRight, Loader2, Check, Sparkles } from 'lucide-react';
+import { Eye, EyeOff, Lock, User, Mail, ArrowRight, Loader2, Sparkles } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore.js';
 import ErrorMessageArea from '../components/common/ErrorMessageArea.jsx';
 
 /**
- * S-02: RegisterPage (Pendaftaran Akun Peneliti)
- * Acuan: docs/gwasena-v2/USER_FLOW.md Bagian 4 & WIREFRAME.md Layar S-02
+ * S-02: RegisterPage (Pendaftaran Akun Peneliti - Figma Aligned)
+ * Acuan: 02 — Register.png, 02 — Register (Light).png
  * Kontrak Skema: RegisterIn (username: 3-50, email: max 120, password: min 8)
  */
 export default function RegisterPage() {
@@ -65,19 +65,19 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="w-full max-w-md animate-fade-in py-4">
-      <div className="rounded-2xl border border-border-strong bg-surface/90 p-6 sm:p-8 shadow-2xl backdrop-blur-md">
+    <div className="w-full max-w-md animate-fade-in py-2">
+      <div className="rounded-3xl border border-slate-300 dark:border-white/10 bg-white dark:bg-[#121B38]/85 p-7 sm:p-9 shadow-2xl backdrop-blur-md">
         {/* Header Form */}
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold tracking-tight text-text-primary">
-            Daftar Akun Peneliti
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+            Buat Akun Peneliti
           </h1>
-          <p className="mt-1 text-xs text-text-secondary">
+          <p className="mt-1.5 text-xs text-slate-600 dark:text-slate-400">
             Bergabunglah dengan platform analisis asosiasi genomik terpadu GWASena
           </p>
         </div>
 
-        {/* Kotak Galat Pesan */}
+        {/* Kotak Galat Pesan Figma Message Banner */}
         <ErrorMessageArea error={error} onDismiss={() => setError(null)} className="mb-4" />
 
         {/* Form Registrasi */}
@@ -86,12 +86,12 @@ export default function RegisterPage() {
           <div>
             <label
               htmlFor="username"
-              className="block text-xs font-semibold uppercase tracking-wider text-text-secondary mb-1"
+              className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
             >
               Username
             </label>
             <div className="relative">
-              <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-text-muted">
+              <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
                 <User className="h-4 w-4" />
               </span>
               <input
@@ -105,11 +105,10 @@ export default function RegisterPage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="peneliti_ipb"
-                style={{ color: 'var(--text-primary)', backgroundColor: 'var(--bg-surface-elevated)' }}
-                className="w-full rounded-xl border border-border-strong bg-surface-elevated py-2 pl-9 pr-3 text-sm text-text-primary placeholder:text-text-muted focus:border-accent-cyan focus:outline-none focus:ring-1 focus:ring-accent-cyan transition-colors"
+                className="w-full rounded-xl border border-slate-300 dark:border-white/10 bg-[#F1F4FD] dark:bg-[#0F172E] py-2 pl-10 pr-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-[#5B4DFE] focus:outline-none focus:ring-1 focus:ring-[#5B4DFE] transition-all font-medium"
               />
             </div>
-            <span className="mt-1 block text-[10px] text-text-muted">
+            <span className="mt-1 block text-[10px] text-slate-500 dark:text-slate-400">
               3–50 karakter (huruf, angka, _, ., -)
             </span>
           </div>
@@ -118,12 +117,12 @@ export default function RegisterPage() {
           <div>
             <label
               htmlFor="email"
-              className="block text-xs font-semibold uppercase tracking-wider text-text-secondary mb-1"
+              className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
             >
               Alamat Email
             </label>
             <div className="relative">
-              <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-text-muted">
+              <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
                 <Mail className="h-4 w-4" />
               </span>
               <input
@@ -136,8 +135,7 @@ export default function RegisterPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="peneliti@apps.ipb.ac.id"
-                style={{ color: 'var(--text-primary)', backgroundColor: 'var(--bg-surface-elevated)' }}
-                className="w-full rounded-xl border border-border-strong bg-surface-elevated py-2 pl-9 pr-3 text-sm text-text-primary placeholder:text-text-muted focus:border-accent-cyan focus:outline-none focus:ring-1 focus:ring-accent-cyan transition-colors"
+                className="w-full rounded-xl border border-slate-300 dark:border-white/10 bg-[#F1F4FD] dark:bg-[#0F172E] py-2 pl-10 pr-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-[#5B4DFE] focus:outline-none focus:ring-1 focus:ring-[#5B4DFE] transition-all font-medium"
               />
             </div>
           </div>
@@ -146,12 +144,12 @@ export default function RegisterPage() {
           <div>
             <label
               htmlFor="password"
-              className="block text-xs font-semibold uppercase tracking-wider text-text-secondary mb-1"
+              className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
             >
               Kata Sandi
             </label>
             <div className="relative">
-              <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-text-muted">
+              <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
                 <Lock className="h-4 w-4" />
               </span>
               <input
@@ -164,13 +162,12 @@ export default function RegisterPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Minimal 8 karakter"
-                style={{ color: 'var(--text-primary)', backgroundColor: 'var(--bg-surface-elevated)' }}
-                className="w-full rounded-xl border border-border-strong bg-surface-elevated py-2 pl-9 pr-10 text-sm text-text-primary placeholder:text-text-muted focus:border-accent-cyan focus:outline-none focus:ring-1 focus:ring-accent-cyan transition-colors"
+                className="w-full rounded-xl border border-slate-300 dark:border-white/10 bg-[#F1F4FD] dark:bg-[#0F172E] py-2 pl-10 pr-10 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-[#5B4DFE] focus:outline-none focus:ring-1 focus:ring-[#5B4DFE] transition-all font-medium"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 flex items-center pr-3 text-text-muted hover:text-text-primary"
+                className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 hover:text-slate-700 dark:hover:text-white transition-colors"
                 aria-label={showPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi'}
               >
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -182,12 +179,12 @@ export default function RegisterPage() {
           <div>
             <label
               htmlFor="confirmPassword"
-              className="block text-xs font-semibold uppercase tracking-wider text-text-secondary mb-1"
+              className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1"
             >
               Konfirmasi Kata Sandi
             </label>
             <div className="relative">
-              <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-text-muted">
+              <span className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
                 <Lock className="h-4 w-4" />
               </span>
               <input
@@ -199,17 +196,16 @@ export default function RegisterPage() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Ulangi kata sandi"
-                style={{ color: 'var(--text-primary)', backgroundColor: 'var(--bg-surface-elevated)' }}
-                className="w-full rounded-xl border border-border-strong bg-surface-elevated py-2 pl-9 pr-3 text-sm text-text-primary placeholder:text-text-muted focus:border-accent-cyan focus:outline-none focus:ring-1 focus:ring-accent-cyan transition-colors"
+                className="w-full rounded-xl border border-slate-300 dark:border-white/10 bg-[#F1F4FD] dark:bg-[#0F172E] py-2 pl-10 pr-3 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-[#5B4DFE] focus:outline-none focus:ring-1 focus:ring-[#5B4DFE] transition-all font-medium"
               />
             </div>
           </div>
 
-          {/* Tombol Submit Registrasi */}
+          {/* Tombol Submit Registrasi (Figma Primary CTA #5B4DFE) */}
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-accent-primary py-3 text-sm font-bold text-white shadow-md hover:bg-accent-primary/90 focus:outline-none focus:ring-2 focus:ring-accent-primary/50 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-[#5B4DFE] py-3 text-sm font-bold text-white shadow-lg shadow-[#5B4DFE]/30 hover:bg-[#4F46E5] hover:-translate-y-[1px] hover:shadow-xl active:scale-[0.97] active:brightness-95 focus:outline-none focus:ring-2 focus:ring-[#5B4DFE]/50 transition-all duration-100 disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {isLoading ? (
               <>
@@ -218,7 +214,7 @@ export default function RegisterPage() {
               </>
             ) : (
               <>
-                <span>Daftar Akun Peneliti</span>
+                <span>Buat Akun Peneliti</span>
                 <ArrowRight className="h-4 w-4" />
               </>
             )}
@@ -226,32 +222,30 @@ export default function RegisterPage() {
 
           {/* Opsi Akses Demo Instan */}
           <div className="relative flex py-1 items-center">
-            <div className="flex-grow border-t border-border-subtle"></div>
-            <span className="flex-shrink mx-2 text-[10px] uppercase tracking-wider text-text-muted">
+            <div className="flex-grow border-t border-slate-200 dark:border-white/10"></div>
+            <span className="flex-shrink mx-2 text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-400">
               atau mode pengujian
             </span>
-            <div className="flex-grow border-t border-border-subtle"></div>
+            <div className="flex-grow border-t border-slate-200 dark:border-white/10"></div>
           </div>
 
           <button
             type="button"
-            onClick={async () => {
-              navigate('/login');
-            }}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-accent-cyan/40 bg-accent-cyan/10 py-2.5 text-xs font-bold text-accent-cyan hover:bg-accent-cyan/20 transition-all shadow-sm active:scale-95"
+            onClick={() => navigate('/login')}
+            className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-[#162142] py-2.5 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-[#1E2C58] hover:-translate-y-[1px] active:scale-[0.97] active:brightness-95 transition-all duration-100 shadow-sm"
           >
-            <Sparkles className="h-3.5 w-3.5" />
+            <Sparkles className="h-3.5 w-3.5 text-[#06B6D4]" />
             <span>Gunakan Akun Peneliti Demo di Layar Masuk &rarr;</span>
           </button>
         </form>
 
         {/* Footer Kartu Form */}
-        <div className="mt-5 border-t border-border-subtle pt-3.5 text-center">
-          <p className="text-xs text-text-secondary">
+        <div className="mt-5 border-t border-slate-200 dark:border-white/10 pt-3.5 text-center">
+          <p className="text-xs text-slate-600 dark:text-slate-400">
             Sudah memiliki akun?{' '}
             <Link
               to="/login"
-              className="font-semibold text-accent-cyan hover:underline transition-colors"
+              className="font-semibold text-[#5B4DFE] dark:text-[#06B6D4] hover:underline transition-colors"
             >
               Masuk di sini
             </Link>

@@ -19,9 +19,9 @@ import { analysisService } from '../../services/analysisService.js';
 import { useAnalysisStore } from '../../store/useAnalysisStore.js';
 
 /**
- * S-05: Step2Config (Konfigurasi Parameter QC & Model Asosiasi)
+ * S-05: Step2Config (Konfigurasi Parameter QC & Model Asosiasi - Figma Aligned)
  * Modul: M-04, M-05, M-06 (FR-03 s.d. FR-06, BR-03, AC-04.1, AC-05.1, AC-05.2)
- * Acuan: docs/gwasena-v2/WIREFRAME.md Layar S-05 & API_INTEGRATION.md
+ * Acuan: 05b — Konfigurasi_ GLM Terpilih (Terisi).png & 05c — Konfigurasi_ MLM Terpilih (Terisi).png
  */
 export default function Step2Config({
   analysisId,
@@ -112,11 +112,11 @@ export default function Step2Config({
   return (
     <div className="space-y-8 animate-fade-in">
       {/* ── Header Langkah ── */}
-      <div className="border-b border-border-subtle pb-4">
-        <h2 className="text-xl font-bold tracking-tight text-text-primary">
+      <div className="border-b border-slate-200 dark:border-white/10 pb-4">
+        <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
           2. Konfigurasi Parameter Quality Control & Model Asosiasi
         </h2>
-        <p className="mt-1 text-xs sm:text-sm text-text-secondary leading-relaxed">
+        <p className="mt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
           Tentukan sifat agronomi yang diuji, sesuaikan filter penyaringan data varian genomik, serta pilih model asosiasi (GLM atau MLM).
         </p>
       </div>
@@ -125,29 +125,29 @@ export default function Step2Config({
 
       {/* Banner 501 Transparan & Opsi Simulasi UI */}
       {backendNotice501 && (
-        <div className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-5 backdrop-blur-md animate-fade-in space-y-3">
+        <div className="rounded-3xl border border-amber-300 dark:border-amber-500/40 bg-amber-50 dark:bg-amber-500/10 p-5 sm:p-6 backdrop-blur-md animate-fade-in space-y-3">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="h-5 w-5 text-status-warning shrink-0 mt-0.5" />
+            <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
             <div className="space-y-1">
-              <h4 className="text-sm font-bold text-text-primary">
+              <h4 className="text-sm font-bold text-slate-900 dark:text-white">
                 Pemberitahuan Transparansi Pipeline (HTTP 501)
               </h4>
-              <p className="text-xs text-text-secondary leading-relaxed">
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
                 {backendNotice501}
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 pt-2 border-t border-amber-500/20">
+          <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-amber-200 dark:border-amber-500/20">
             <button
               type="button"
               onClick={(e) => handleStartAnalysis(e, true)}
-              className="inline-flex items-center gap-2 rounded-xl bg-status-warning px-4 py-2 text-xs font-bold text-neutral-950 shadow-md hover:bg-amber-400 transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl bg-amber-400 hover:bg-amber-300 px-4 py-2 text-xs font-bold text-slate-950 shadow-md transition-all active:scale-[0.99]"
             >
               <Sparkles className="h-4 w-4" />
               <span>Buka Pratinjau Alur Komputasi & Visualisasi UI</span>
             </button>
-            <span className="text-[11px] text-text-muted">
+            <span className="text-[11px] text-slate-600 dark:text-slate-400">
               (Menampilkan antarmuka Langkah 3 s.d. 6 dengan penanda simulasi yang jelas)
             </span>
           </div>
@@ -156,20 +156,20 @@ export default function Step2Config({
 
       <form onSubmit={(e) => handleStartAnalysis(e, false)} className="space-y-8">
         {/* ── Bagian A: Pemilihan Sifat Fenotipe (Trait) ── */}
-        <div className="rounded-2xl border border-border-strong bg-surface p-6 shadow-sm space-y-4">
+        <div className="rounded-3xl border border-slate-300 dark:border-white/10 bg-white dark:bg-[#121B38]/85 p-6 shadow-xl space-y-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-accent-cyan/15 text-accent-cyan text-xs font-bold">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-[#06B6D4]/15 text-[#06B6D4] text-xs font-bold">
                 A
               </span>
-              <h3 className="text-base font-bold text-text-primary">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">
                 Sifat Fenotipe Target Analisis
               </h3>
             </div>
-            <span className="text-xs text-text-muted">Tepat 1 sifat per sesi analisis</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400">Tepat 1 sifat per sesi analisis</span>
           </div>
 
-          <p className="text-xs text-text-secondary">
+          <p className="text-xs text-slate-600 dark:text-slate-300">
             Pilih satu karakter agronomi kuantitatif dari berkas CSV yang telah divalidasi:
           </p>
 
@@ -177,7 +177,7 @@ export default function Step2Config({
             <select
               value={trait}
               onChange={(e) => setTrait(e.target.value)}
-              className="w-full rounded-xl border border-border-strong bg-surface-elevated py-2.5 px-3.5 text-sm font-mono font-medium text-text-primary focus:border-accent-cyan focus:outline-none focus:ring-1 focus:ring-accent-cyan cursor-pointer"
+              className="w-full rounded-xl border border-slate-300 dark:border-white/10 bg-[#F1F4FD] dark:bg-[#0F172E] py-2.5 px-3.5 text-sm font-mono font-medium text-slate-900 dark:text-white focus:border-[#5B4DFE] focus:outline-none focus:ring-1 focus:ring-[#5B4DFE] cursor-pointer"
             >
               {availableTraits.length > 0 ? (
                 availableTraits.map((t) => (
@@ -197,30 +197,30 @@ export default function Step2Config({
         </div>
 
         {/* ── Bagian B: Parameter Quality Control (M-04) ── */}
-        <div className="rounded-2xl border border-border-strong bg-surface p-6 shadow-sm space-y-6">
-          <div className="flex items-center justify-between border-b border-border-subtle pb-3">
-            <div className="flex items-center gap-2">
-              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-accent-primary/15 text-accent-primary text-xs font-bold">
+        <div className="rounded-3xl border border-slate-300 dark:border-white/10 bg-white dark:bg-[#121B38]/85 p-6 shadow-xl space-y-6">
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-3">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-[#5B4DFE]/15 text-[#5B4DFE] text-xs font-bold">
                 B
               </span>
-              <h3 className="text-base font-bold text-text-primary">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">
                 Parameter Quality Control (QC)
               </h3>
             </div>
-            <span className="text-xs font-mono text-text-muted">Standar PLINK 2 Engine</span>
+            <span className="text-xs font-mono text-slate-500 dark:text-slate-400">Standar PLINK 2 Engine</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* 1. Missingness per Sampel (mind) */}
-            <div className="space-y-2 rounded-xl border border-border-subtle bg-surface-elevated/40 p-4">
+            <div className="space-y-2 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172E]/60 p-4 shadow-sm">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
-                  <label htmlFor="mind" className="text-xs font-bold text-text-primary">
+                  <label htmlFor="mind" className="text-xs font-bold text-slate-900 dark:text-white">
                     Missingness Sampel (mind)
                   </label>
                   <EduHintTooltip hintKey="mind" />
                 </div>
-                <span className="font-mono text-xs font-bold text-accent-cyan tabular-nums">
+                <span className="font-mono text-xs font-bold text-[#5B4DFE] dark:text-[#06B6D4] tabular-nums">
                   {mind}
                 </span>
               </div>
@@ -232,23 +232,23 @@ export default function Step2Config({
                 step={QC_PARAM_RANGES.mind.step}
                 value={mind}
                 onChange={(e) => setMind(e.target.value)}
-                className="w-full accent-accent-cyan cursor-pointer"
+                className="w-full accent-[#5B4DFE] dark:accent-[#06B6D4] cursor-pointer"
               />
-              <span className="text-[11px] text-text-muted block">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 block">
                 Default: 0.10 (buang sampel dengan missing data &gt; 10%)
               </span>
             </div>
 
             {/* 2. Missingness per SNP (geno) */}
-            <div className="space-y-2 rounded-xl border border-border-subtle bg-surface-elevated/40 p-4">
+            <div className="space-y-2 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172E]/60 p-4 shadow-sm">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
-                  <label htmlFor="geno" className="text-xs font-bold text-text-primary">
+                  <label htmlFor="geno" className="text-xs font-bold text-slate-900 dark:text-white">
                     Missingness SNP (geno)
                   </label>
                   <EduHintTooltip hintKey="geno" />
                 </div>
-                <span className="font-mono text-xs font-bold text-accent-cyan tabular-nums">
+                <span className="font-mono text-xs font-bold text-[#5B4DFE] dark:text-[#06B6D4] tabular-nums">
                   {geno}
                 </span>
               </div>
@@ -260,23 +260,23 @@ export default function Step2Config({
                 step={QC_PARAM_RANGES.geno.step}
                 value={geno}
                 onChange={(e) => setGeno(e.target.value)}
-                className="w-full accent-accent-cyan cursor-pointer"
+                className="w-full accent-[#5B4DFE] dark:accent-[#06B6D4] cursor-pointer"
               />
-              <span className="text-[11px] text-text-muted block">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 block">
                 Default: 0.10 (buang SNP yang hilang pada &gt; 10% populasi)
               </span>
             </div>
 
             {/* 3. Minor Allele Frequency (maf) */}
-            <div className="space-y-2 rounded-xl border border-border-subtle bg-surface-elevated/40 p-4">
+            <div className="space-y-2 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172E]/60 p-4 shadow-sm">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
-                  <label htmlFor="maf" className="text-xs font-bold text-text-primary">
+                  <label htmlFor="maf" className="text-xs font-bold text-slate-900 dark:text-white">
                     Minor Allele Frequency (maf)
                   </label>
                   <EduHintTooltip hintKey="maf" />
                 </div>
-                <span className="font-mono text-xs font-bold text-accent-cyan tabular-nums">
+                <span className="font-mono text-xs font-bold text-[#5B4DFE] dark:text-[#06B6D4] tabular-nums">
                   {maf}
                 </span>
               </div>
@@ -288,23 +288,23 @@ export default function Step2Config({
                 step={QC_PARAM_RANGES.maf.step}
                 value={maf}
                 onChange={(e) => setMaf(e.target.value)}
-                className="w-full accent-accent-cyan cursor-pointer"
+                className="w-full accent-[#5B4DFE] dark:accent-[#06B6D4] cursor-pointer"
               />
-              <span className="text-[11px] text-text-muted block">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 block">
                 Default: 0.05 (saring varian langka &lt; 5%)
               </span>
             </div>
 
             {/* 4. Relatedness / Kinship Cutoff (king_cutoff) */}
-            <div className="space-y-2 rounded-xl border border-border-subtle bg-surface-elevated/40 p-4">
+            <div className="space-y-2 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172E]/60 p-4 shadow-sm">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
-                  <label htmlFor="king" className="text-xs font-bold text-text-primary">
+                  <label htmlFor="king" className="text-xs font-bold text-slate-900 dark:text-white">
                     Kinship Cutoff KING
                   </label>
                   <EduHintTooltip hintKey="king_cutoff" />
                 </div>
-                <span className="font-mono text-xs font-bold text-accent-cyan tabular-nums">
+                <span className="font-mono text-xs font-bold text-[#5B4DFE] dark:text-[#06B6D4] tabular-nums">
                   {kingCutoff}
                 </span>
               </div>
@@ -316,18 +316,18 @@ export default function Step2Config({
                 step={QC_PARAM_RANGES.king_cutoff.step}
                 value={kingCutoff}
                 onChange={(e) => setKingCutoff(e.target.value)}
-                className="w-full accent-accent-cyan cursor-pointer"
+                className="w-full accent-[#5B4DFE] dark:accent-[#06B6D4] cursor-pointer"
               />
-              <span className="text-[11px] text-text-muted block">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 block">
                 Default: 0.177 (hubungan derajat pertama / klon kembar)
               </span>
             </div>
 
             {/* 5. Hardy-Weinberg Equilibrium (hwe) - Input khusus dengan catatan agronomi */}
-            <div className="md:col-span-2 space-y-2 rounded-xl border border-border-subtle bg-surface-elevated/40 p-4">
+            <div className="md:col-span-2 space-y-2 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172E]/60 p-4 shadow-sm">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
-                  <label htmlFor="hwe" className="text-xs font-bold text-text-primary">
+                  <label htmlFor="hwe" className="text-xs font-bold text-slate-900 dark:text-white">
                     Ambang Batas HWE p-value (hwe)
                   </label>
                   <EduHintTooltip hintKey="hwe" />
@@ -337,11 +337,11 @@ export default function Step2Config({
                   type="text"
                   value={hwe}
                   onChange={(e) => setHwe(e.target.value)}
-                  className="w-28 font-mono text-xs font-bold text-accent-cyan bg-surface rounded-lg border border-border-strong px-2.5 py-1 text-right focus:outline-none focus:border-accent-cyan"
+                  className="w-28 font-mono text-xs font-bold text-[#5B4DFE] dark:text-[#06B6D4] bg-white dark:bg-[#121B38] rounded-xl border border-slate-300 dark:border-white/10 px-3 py-1.5 text-right focus:outline-none focus:border-[#5B4DFE]"
                 />
               </div>
-              <div className="rounded-lg bg-amber-500/10 border border-amber-500/20 p-2.5 text-[11px] text-text-secondary leading-relaxed flex items-start gap-2">
-                <Info className="h-4 w-4 text-status-warning shrink-0 mt-0.5" />
+              <div className="rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 p-3 text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed flex items-start gap-2">
+                <Info className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
                 <span>
                   <strong>Catatan Khusus Bawang Putih:</strong> Tanaman bawang putih umumnya diperbanyak secara vegetatif (klonal), sehingga penyimpangan HWE sering terjadi secara alami. Dianjurkan menggunakan ambang longgar (<code>1e-6</code>) agar varian penting tidak terbuang.
                 </span>
@@ -351,23 +351,23 @@ export default function Step2Config({
         </div>
 
         {/* ── Bagian C: PCA Otomatis (M-05, FR-04, AC-04.1) ── */}
-        <div className="rounded-2xl border border-indigo-500/30 bg-indigo-500/5 p-6 space-y-3">
+        <div className="rounded-3xl border border-indigo-200 dark:border-[#5B4DFE]/30 bg-indigo-50/70 dark:bg-[#5B4DFE]/10 p-6 space-y-3 shadow-sm">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-indigo-500/20 text-indigo-400 text-xs font-bold">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-[#5B4DFE]/15 text-[#5B4DFE] text-xs font-bold">
                 C
               </span>
-              <h3 className="text-base font-bold text-text-primary">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">
                 Struktur Populasi (PCA Otomatis)
               </h3>
               <EduHintTooltip hintKey="pca" />
             </div>
-            <span className="rounded-full bg-indigo-500/20 border border-indigo-500/30 px-3 py-0.5 text-xs font-bold text-indigo-400">
+            <span className="rounded-full bg-indigo-100 dark:bg-[#5B4DFE]/20 border border-indigo-300 dark:border-[#5B4DFE]/30 px-3 py-0.5 text-xs font-bold text-indigo-900 dark:text-[#06B6D4]">
               Otomatis & Wajib (FR-04)
             </span>
           </div>
 
-          <p className="text-xs text-text-secondary leading-relaxed">
+          <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">
             Principal Component Analysis (PCA) dijalankan secara otomatis setelah tahap QC untuk
             menghasilkan <strong>3 komponen utama (PC1–PC3)</strong> sebagai kovariat struktur populasi.
             Tahap ini <strong>tidak dapat dilewati</strong> demi mencegah temuan asosiasi positif palsu akibat stratifikasi geografis aksesi.
@@ -375,44 +375,44 @@ export default function Step2Config({
         </div>
 
         {/* ── Bagian D: Pemilihan Model Asosiasi (M-06, FR-05, BR-03, AC-05.1) ── */}
-        <div className="rounded-2xl border border-border-strong bg-surface p-6 shadow-sm space-y-4">
-          <div className="flex items-center justify-between border-b border-border-subtle pb-3">
-            <div className="flex items-center gap-2">
-              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-accent-cyan/15 text-accent-cyan text-xs font-bold">
+        <div className="rounded-3xl border border-slate-300 dark:border-white/10 bg-white dark:bg-[#121B38]/85 p-6 shadow-xl space-y-4">
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-3">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-[#06B6D4]/15 text-[#06B6D4] text-xs font-bold">
                 D
               </span>
-              <h3 className="text-base font-bold text-text-primary">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">
                 Model Uji Asosiasi (Pilih Tepat Satu - BR-03)
               </h3>
             </div>
-            <span className="text-xs text-text-muted">Aturan Bisnis BR-03</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400">Aturan Bisnis BR-03</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* Model 1: GLM */}
             <div
               onClick={() => setModel('GLM')}
-              className={`rounded-2xl border-2 p-5 cursor-pointer transition-all ${
+              className={`rounded-2xl border-2 p-5 cursor-pointer transition-all duration-150 active:scale-[0.985] ${
                 model === 'GLM'
-                  ? 'border-accent-primary bg-accent-primary/10 shadow-lg'
-                  : 'border-border-subtle bg-surface-elevated/40 hover:border-border-strong'
+                  ? 'border-[#5B4DFE] bg-indigo-50/80 dark:bg-[#5B4DFE]/15 shadow-md ring-2 ring-[#5B4DFE]/40'
+                  : 'border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-[#0F172E]/60 hover:border-slate-400 hover:-translate-y-[1px]'
               }`}
             >
               <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2.5">
                   <input
                     type="radio"
                     name="model"
                     value="GLM"
                     checked={model === 'GLM'}
                     onChange={() => setModel('GLM')}
-                    className="accent-accent-primary h-4 w-4"
+                    className="accent-[#5B4DFE] h-4 w-4 cursor-pointer"
                   />
-                  <span className="text-base font-bold text-text-primary">GLM</span>
+                  <span className="text-base font-bold text-slate-900 dark:text-white">GLM</span>
                 </div>
                 <EduHintTooltip hintKey="glm" />
               </div>
-              <p className="text-xs text-text-secondary leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 General Linear Model. Menguji asosiasi dengan kovariat PC dari PCA. Komputasi cepat,
                 cocok untuk populasi tanpa struktur kekerabatan yang kompleks.
               </p>
@@ -421,38 +421,38 @@ export default function Step2Config({
             {/* Model 2: MLM (Rekomendasi Bawang Putih) */}
             <div
               onClick={() => setModel('MLM')}
-              className={`rounded-2xl border-2 p-5 cursor-pointer transition-all ${
+              className={`rounded-2xl border-2 p-5 cursor-pointer transition-all duration-150 active:scale-[0.985] ${
                 model === 'MLM'
-                  ? 'border-accent-cyan bg-accent-cyan/10 shadow-lg'
-                  : 'border-border-subtle bg-surface-elevated/40 hover:border-border-strong'
+                  ? 'border-cyan-600 dark:border-[#06B6D4] bg-cyan-50/80 dark:bg-[#06B6D4]/15 shadow-md ring-2 ring-cyan-500/40'
+                  : 'border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-[#0F172E]/60 hover:border-slate-400 hover:-translate-y-[1px]'
               }`}
             >
               <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2.5">
                   <input
                     type="radio"
                     name="model"
                     value="MLM"
                     checked={model === 'MLM'}
                     onChange={() => setModel('MLM')}
-                    className="accent-accent-cyan h-4 w-4"
+                    className="accent-[#06B6D4] h-4 w-4 cursor-pointer"
                   />
-                  <span className="text-base font-bold text-text-primary">MLM</span>
+                  <span className="text-base font-bold text-slate-900 dark:text-white">MLM</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="rounded-full bg-accent-cyan/20 border border-accent-cyan/30 px-2 py-0.5 text-[10px] font-bold text-accent-cyan">
+                  <span className="rounded-full bg-cyan-100 dark:bg-[#06B6D4]/20 border border-cyan-300 dark:border-[#06B6D4]/30 px-2.5 py-0.5 text-[10px] font-bold text-cyan-900 dark:text-[#06B6D4]">
                     Direkomendasikan
                   </span>
                   <EduHintTooltip hintKey="mlm" />
                 </div>
               </div>
-              <p className="text-xs text-text-secondary leading-relaxed">
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
                 Mixed Linear Model. Menggabungkan kovariat PCA (efek tetap) DAN matriks kekerabatan
                 genetik / <em>Kinship</em> (efek acak). Sangat direkomendasikan untuk tanaman klonal bawang putih.
               </p>
               {model === 'MLM' && (
-                <div className="mt-3 flex items-center gap-1 text-[11px] font-semibold text-status-success animate-fade-in">
-                  <CheckCircle2 className="h-3.5 w-3.5" />
+                <div className="mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 animate-fade-down">
+                  <CheckCircle2 className="h-3.5 w-3.5 stroke-[2.5] animate-pop-in" />
                   <span>Matriks Kinship disertakan secara otomatis (AC-05.2)</span>
                 </div>
               )}
@@ -461,57 +461,57 @@ export default function Step2Config({
         </div>
 
         {/* ── Bagian E: Koreksi Multiple Testing & Alpha (M-06, FR-06) ── */}
-        <div className="rounded-2xl border border-border-strong bg-surface p-6 shadow-sm space-y-4">
-          <div className="flex items-center justify-between border-b border-border-subtle pb-3">
-            <div className="flex items-center gap-2">
-              <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-emerald-500/15 text-status-success text-xs font-bold">
+        <div className="rounded-3xl border border-slate-300 dark:border-white/10 bg-white dark:bg-[#121B38]/85 p-6 shadow-xl space-y-4">
+          <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-3">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-7 w-7 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-xs font-bold">
                 E
               </span>
-              <h3 className="text-base font-bold text-text-primary">
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">
                 Koreksi Multiple Testing & Ambang Signifikansi
               </h3>
             </div>
-            <span className="text-xs text-text-muted">Pengendalian Positif Palsu</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400">Pengendalian Positif Palsu</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Checkbox Bonferroni */}
-            <label className="flex items-start gap-3 rounded-xl border border-border-subtle bg-surface-elevated/40 p-4 cursor-pointer hover:bg-surface-elevated/70 transition-colors">
+            <label className="flex items-start gap-3 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172E]/60 p-4 cursor-pointer hover:border-[#5B4DFE] shadow-sm transition-colors">
               <input
                 type="checkbox"
                 checked={koreksi.includes('bonferroni')}
                 onChange={() => handleToggleKoreksi('bonferroni')}
-                className="mt-0.5 rounded border-border-strong text-accent-primary focus:ring-accent-cyan h-4 w-4"
+                className="mt-0.5 rounded border-slate-400 dark:border-slate-600 text-[#5B4DFE] focus:ring-[#5B4DFE] h-4 w-4"
               />
               <div className="space-y-1">
                 <div className="flex items-center gap-1">
-                  <span className="text-xs font-bold text-text-primary">Bonferroni</span>
+                  <span className="text-xs font-bold text-slate-900 dark:text-white">Bonferroni</span>
                   <EduHintTooltip hintKey="bonferroni" />
                 </div>
-                <p className="text-[11px] text-text-muted">Koreksi paling ketat (alpha / total SNP).</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">Koreksi paling ketat (alpha / total SNP).</p>
               </div>
             </label>
 
             {/* Checkbox FDR */}
-            <label className="flex items-start gap-3 rounded-xl border border-border-subtle bg-surface-elevated/40 p-4 cursor-pointer hover:bg-surface-elevated/70 transition-colors">
+            <label className="flex items-start gap-3 rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172E]/60 p-4 cursor-pointer hover:border-[#5B4DFE] shadow-sm transition-colors">
               <input
                 type="checkbox"
                 checked={koreksi.includes('fdr')}
                 onChange={() => handleToggleKoreksi('fdr')}
-                className="mt-0.5 rounded border-border-strong text-accent-primary focus:ring-accent-cyan h-4 w-4"
+                className="mt-0.5 rounded border-slate-400 dark:border-slate-600 text-[#5B4DFE] focus:ring-[#5B4DFE] h-4 w-4"
               />
               <div className="space-y-1">
                 <div className="flex items-center gap-1">
-                  <span className="text-xs font-bold text-text-primary">FDR (Benjamini-Hochberg)</span>
+                  <span className="text-xs font-bold text-slate-900 dark:text-white">FDR (Benjamini-Hochberg)</span>
                   <EduHintTooltip hintKey="fdr" />
                 </div>
-                <p className="text-[11px] text-text-muted">Koreksi adaptif untuk sifat poligenik.</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">Koreksi adaptif untuk sifat poligenik.</p>
               </div>
             </label>
 
             {/* Input Alpha */}
-            <div className="rounded-xl border border-border-subtle bg-surface-elevated/40 p-4 space-y-1.5">
-              <label htmlFor="alpha" className="block text-xs font-bold text-text-primary">
+            <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172E]/60 p-4 space-y-1.5 shadow-sm">
+              <label htmlFor="alpha" className="block text-xs font-bold text-slate-900 dark:text-white">
                 Ambang Alpha Signifikansi
               </label>
               <input
@@ -522,19 +522,19 @@ export default function Step2Config({
                 step={0.005}
                 value={alpha}
                 onChange={(e) => setAlpha(e.target.value)}
-                className="w-full font-mono text-xs font-bold text-accent-cyan bg-surface rounded-lg border border-border-strong py-1.5 px-3 focus:outline-none focus:border-accent-cyan"
+                className="w-full font-mono text-xs font-bold text-slate-900 dark:text-[#06B6D4] bg-white dark:bg-[#121B38] rounded-xl border border-slate-300 dark:border-white/10 py-2 px-3 focus:outline-none focus:border-[#5B4DFE]"
               />
-              <span className="text-[10px] text-text-muted block">Default standar riset: 0.05</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 block">Default standar riset: 0.05</span>
             </div>
           </div>
         </div>
 
         {/* ── Tombol Navigasi Wizard Footer ── */}
-        <div className="flex items-center justify-between pt-4 border-t border-border-subtle">
+        <div className="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-white/10">
           <button
             type="button"
             onClick={onPrev}
-            className="inline-flex items-center gap-2 rounded-xl border border-border-subtle px-5 py-3 text-xs font-semibold text-text-secondary hover:bg-surface-elevated hover:text-text-primary transition-colors"
+            className="inline-flex items-center gap-2 rounded-xl border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-[#162142] px-5 py-3 text-xs font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-[#1E2C58] hover:-translate-y-[1px] hover:shadow-md active:scale-[0.97] active:brightness-95 transition-all duration-100 shadow-sm"
           >
             <ArrowLeft className="h-4 w-4" />
             <span>Kembali ke Unggah Berkas</span>
@@ -543,7 +543,7 @@ export default function Step2Config({
           <button
             type="submit"
             disabled={isSubmitting}
-            className="inline-flex items-center gap-2 rounded-xl bg-accent-primary px-7 py-3 text-sm font-bold text-white shadow-xl hover:bg-accent-primary/90 focus:outline-none focus:ring-2 focus:ring-accent-primary/50 transition-all disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-xl bg-[#5B4DFE] px-7 py-3 text-sm font-bold text-white shadow-lg shadow-[#5B4DFE]/30 hover:bg-[#4F46E5] hover:-translate-y-[1px] hover:shadow-xl active:scale-[0.97] active:brightness-95 focus:outline-none focus:ring-2 focus:ring-[#5B4DFE]/50 transition-all duration-100 disabled:opacity-60 disabled:transform-none disabled:shadow-none"
           >
             {isSubmitting ? (
               <>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Lock,
   Loader2,
@@ -18,8 +18,8 @@ import { TIPS_EDUKATIF } from '../../constants/eduHints.js';
 import { generateBenchmarkResults } from '../../services/mockResults.js';
 
 /**
- * S-06 (Langkah 3): Layar Tunggu Komputasi Pipeline
- * Acuan: docs/gwasena-v2/WIREFRAME.md, USER_FLOW.md, DESIGN.md (Bagian 6, 8B)
+ * S-06 (Langkah 3): Layar Tunggu Komputasi Pipeline (Figma Aligned)
+ * Acuan: 06 — Komputasi_ QC Berjalan.png s.d. 06d — Komputasi_ Semua Selesai.png
  *
  * Mengunci konfigurasi form (BR-05, AC-10.1), menampilkan progres 4 tahapan diskrit,
  * menyajikan ringkasan QC (AC-03.1), serta karusel Tips Edukatif dinamis (FR-10).
@@ -94,14 +94,12 @@ export default function Step3Computation({ analysisId, onComplete }) {
             const resultsData = await analysisService.getResults(analysisId);
             setResults(resultsData);
           } catch (rErr) {
-            // Jika results 501, fallback ke benchmark
             const fallback = generateBenchmarkResults(configParams, uploadSummary);
             setResults(fallback);
           }
           return;
         }
 
-        // Tentukan tahap berdasarkan pesan / status backend
         if (res.tahap) {
           setActiveStage(Number(res.tahap) || 1);
         }
@@ -133,7 +131,6 @@ export default function Step3Computation({ analysisId, onComplete }) {
     setBackendNotice(null);
     setActiveStage(1);
 
-    // Langkah bertahap realistis untuk demonstrasi interaktif
     setTimeout(() => setActiveStage(2), 1200);
     setTimeout(() => setActiveStage(3), 2600);
     setTimeout(() => setActiveStage(4), 4000);
@@ -153,19 +150,19 @@ export default function Step3Computation({ analysisId, onComplete }) {
   return (
     <div className="space-y-8 animate-fade-in">
       {/* ── Banner Status Terkunci (BR-05, AC-10.1) ── */}
-      <div className="relative overflow-hidden rounded-2xl border border-amber-500/40 bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-transparent p-5 sm:p-6">
+      <div className="relative overflow-hidden rounded-3xl border border-amber-300 dark:border-amber-500/40 bg-gradient-to-r from-amber-100 via-amber-50 to-transparent dark:from-amber-500/15 dark:via-amber-500/5 dark:to-transparent p-5 sm:p-6 backdrop-blur-md">
         <div className="flex items-start gap-4">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber-500/20 text-amber-500 shadow-inner">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-amber-500/20 text-amber-600 dark:text-amber-400 shadow-inner">
             <Lock className="h-5 w-5" />
           </div>
           <div className="space-y-1">
-            <h3 className="text-sm sm:text-base font-bold text-text-primary flex items-center gap-2">
+            <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <span>Komputasi Pipeline Sedang Berjalan</span>
-              <span className="inline-flex items-center rounded-full bg-amber-500/20 px-2 py-0.5 text-[11px] font-semibold text-amber-500">
+              <span className="inline-flex items-center rounded-full bg-amber-200 dark:bg-amber-500/20 px-2.5 py-0.5 text-[11px] font-semibold text-amber-900 dark:text-amber-400">
                 Form Konfigurasi Dikunci (BR-05)
               </span>
             </h3>
-            <p className="text-xs text-text-secondary leading-relaxed max-w-3xl">
+            <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed max-w-3xl">
               Untuk menjaga integritas ilmiah dan reprodusibilitas riset asosiasi genomik,
               parameter Quality Control dan model yang sedang diuji tidak dapat diubah selama proses
               analisis aktif.
@@ -176,21 +173,21 @@ export default function Step3Computation({ analysisId, onComplete }) {
 
       {/* ── Pemberitahuan Backend 501 Transparan ── */}
       {backendNotice && !isSimulated && (
-        <div className="rounded-2xl border border-cyan-500/40 bg-cyan-950/20 p-5 space-y-3">
+        <div className="rounded-3xl border border-cyan-300 dark:border-[#06B6D4]/40 bg-cyan-50 dark:bg-[#0F2238]/85 p-5 sm:p-6 space-y-3 backdrop-blur-md">
           <div className="flex items-start gap-3">
-            <AlertCircle className="h-5 w-5 text-accent-cyan shrink-0 mt-0.5" />
+            <AlertCircle className="h-5 w-5 text-cyan-700 dark:text-[#06B6D4] shrink-0 mt-0.5" />
             <div className="space-y-1">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-accent-cyan">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-cyan-900 dark:text-[#06B6D4]">
                 Informasi Integrasi Backend (HTTP 501)
               </h4>
-              <p className="text-xs text-text-secondary leading-relaxed">{backendNotice}</p>
+              <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">{backendNotice}</p>
             </div>
           </div>
           <div className="pt-1 flex flex-wrap gap-2">
             <button
               type="button"
               onClick={handleStartSimulation}
-              className="inline-flex items-center gap-2 rounded-xl bg-accent-cyan px-4 py-2 text-xs font-bold text-slate-950 hover:bg-accent-cyan/90 transition-all shadow-md active:scale-95"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#06B6D4] px-4 py-2 text-xs font-bold text-slate-950 hover:bg-[#0891B2] transition-all shadow-md active:scale-95"
             >
               <Sparkles className="h-3.5 w-3.5" />
               <span>Simulasikan Selesai Komputasi (Mode Pengujian UI)</span>
@@ -201,14 +198,14 @@ export default function Step3Computation({ analysisId, onComplete }) {
 
       {/* ── Grid 2 Kolom: Tahapan Pipeline & Edukasi Dinamis ── */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Kolom Kiri: 4 Tahapan Pipeline Diskrit (8 Kolom) */}
+        {/* Kolom Kiri: 4 Tahapan Pipeline Diskrit (7 Kolom) */}
         <div className="lg:col-span-7 space-y-4">
           <div className="flex items-center justify-between">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-text-secondary flex items-center gap-2">
-              <Dna className="h-4 w-4 text-accent-cyan" />
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-400 flex items-center gap-2">
+              <Dna className="h-4 w-4 text-[#06B6D4]" />
               <span>Tahapan Eksekusi Diskrit</span>
             </h4>
-            <span className="text-xs font-mono font-semibold text-accent-cyan">
+            <span className="text-xs font-mono font-semibold text-[#5B4DFE] dark:text-[#06B6D4]">
               {isCompleted ? '4 / 4 Tahap Selesai' : `Tahap ${activeStage} dari 4`}
             </span>
           </div>
@@ -217,30 +214,29 @@ export default function Step3Computation({ analysisId, onComplete }) {
             {PIPELINE_STAGES.map((stage) => {
               const isPast = isCompleted || activeStage > stage.id;
               const isCurrent = !isCompleted && activeStage === stage.id;
-              const isPending = !isCompleted && activeStage < stage.id;
 
               return (
                 <div
                   key={stage.id}
                   className={`flex items-start gap-3.5 rounded-2xl border p-4 transition-all duration-300 ${
                     isCurrent
-                      ? 'border-accent-cyan bg-accent-cyan/5 shadow-md shadow-accent-cyan/5 ring-1 ring-accent-cyan/40'
+                      ? 'border-[#06B6D4] bg-cyan-50/80 dark:bg-[#06B6D4]/10 shadow-lg shadow-[#06B6D4]/10 ring-1 ring-[#06B6D4]/40'
                       : isPast
-                      ? 'border-status-success/30 bg-surface-elevated/40'
-                      : 'border-border-subtle bg-surface/40 opacity-60'
+                      ? 'border-emerald-300 dark:border-emerald-500/30 bg-white dark:bg-[#0F172E]/60 shadow-sm'
+                      : 'border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172E]/30 opacity-70'
                   }`}
                 >
                   <div className="pt-0.5">
                     {isPast ? (
-                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-status-success/20 text-status-success">
-                        <CheckCircle2 className="h-4 w-4" />
+                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">
+                        <CheckCircle2 className="h-4 w-4 stroke-[2.5]" />
                       </div>
                     ) : isCurrent ? (
-                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-accent-cyan/20 text-accent-cyan animate-pulse-ring">
+                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#06B6D4]/20 text-[#06B6D4] animate-pulse-ring">
                         <Loader2 className="h-4 w-4 animate-spin" />
                       </div>
                     ) : (
-                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-surface-elevated text-text-muted font-mono text-xs">
+                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-600 dark:text-slate-400 font-mono text-xs">
                         {stage.id}
                       </div>
                     )}
@@ -250,15 +246,15 @@ export default function Step3Computation({ analysisId, onComplete }) {
                     <p
                       className={`text-xs sm:text-sm font-semibold ${
                         isCurrent
-                          ? 'text-accent-cyan font-bold'
+                          ? 'text-[#5B4DFE] dark:text-[#06B6D4] font-bold'
                           : isPast
-                          ? 'text-text-primary'
-                          : 'text-text-muted'
+                          ? 'text-slate-900 dark:text-white'
+                          : 'text-slate-500 dark:text-slate-400'
                       }`}
                     >
                       {stage.title}
                     </p>
-                    <p className="text-[11px] text-text-secondary leading-relaxed">{stage.desc}</p>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-relaxed">{stage.desc}</p>
                   </div>
                 </div>
               );
@@ -271,7 +267,7 @@ export default function Step3Computation({ analysisId, onComplete }) {
               <button
                 type="button"
                 onClick={onComplete}
-                className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-status-success px-5 py-3 text-sm font-bold text-white shadow-lg shadow-status-success/20 hover:bg-status-success/90 transition-all"
+                className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-emerald-500/30 hover:-translate-y-[1px] hover:shadow-xl active:scale-[0.97] active:brightness-95 transition-all duration-100"
               >
                 <span>Lihat Hasil Analisis & Visualisasi Plot (Langkah 4)</span>
                 <ArrowRight className="h-4 w-4" />
@@ -283,45 +279,45 @@ export default function Step3Computation({ analysisId, onComplete }) {
         {/* Kolom Kanan: Ringkasan QC & Karusel Tips Edukatif (5 Kolom) */}
         <div className="lg:col-span-5 space-y-4">
           {/* Card Ringkasan Hasil Penyaringan QC (AC-03.1) */}
-          <div className="rounded-2xl border border-border-subtle bg-surface-elevated/60 p-4 space-y-3">
-            <div className="flex items-center gap-2 border-b border-border-subtle pb-2.5">
-              <Filter className="h-4 w-4 text-accent-cyan" />
-              <h5 className="text-xs font-bold text-text-primary">
+          <div className="rounded-3xl border border-slate-300 dark:border-white/10 bg-white dark:bg-[#0F172E]/70 p-4 sm:p-5 space-y-3 shadow-lg">
+            <div className="flex items-center gap-2 border-b border-slate-200 dark:border-white/10 pb-2.5">
+              <Filter className="h-4 w-4 text-[#06B6D4]" />
+              <h5 className="text-xs font-bold text-slate-900 dark:text-white">
                 Ringkasan Penyaringan QC (AC-03.1)
               </h5>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <div className="rounded-xl border border-border-subtle bg-surface p-2.5">
-                <span className="text-[10px] text-text-muted block uppercase">Sampel Dianalisis</span>
-                <span className="font-mono text-sm font-bold text-text-primary tabular-nums">
+            <div className="grid grid-cols-2 gap-2.5 text-xs">
+              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#121B38]/80 p-3 shadow-sm">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 block uppercase">Sampel Dianalisis</span>
+                <span className="font-mono text-sm font-bold text-slate-900 dark:text-white tabular-nums">
                   {isCompleted ? '38' : '40'}{' '}
-                  <span className="text-[10px] font-normal text-text-muted">/ 40 total</span>
+                  <span className="text-[10px] font-normal text-slate-500 dark:text-slate-400">/ 40 total</span>
                 </span>
                 {isCompleted && (
-                  <span className="text-[10px] text-status-warning block mt-0.5">
+                  <span className="text-[10px] text-amber-600 dark:text-amber-400 block mt-0.5">
                     -2 disaring (mind)
                   </span>
                 )}
               </div>
 
-              <div className="rounded-xl border border-border-subtle bg-surface p-2.5">
-                <span className="text-[10px] text-text-muted block uppercase">SNP Lolos Filter</span>
-                <span className="font-mono text-sm font-bold text-text-primary tabular-nums">
+              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#121B38]/80 p-3 shadow-sm">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 block uppercase">SNP Lolos Filter</span>
+                <span className="font-mono text-sm font-bold text-slate-900 dark:text-white tabular-nums">
                   {isCompleted ? '482' : '500'}{' '}
-                  <span className="text-[10px] font-normal text-text-muted">/ 500 total</span>
+                  <span className="text-[10px] font-normal text-slate-500 dark:text-slate-400">/ 500 total</span>
                 </span>
                 {isCompleted && (
-                  <span className="text-[10px] text-status-warning block mt-0.5">
+                  <span className="text-[10px] text-amber-600 dark:text-amber-400 block mt-0.5">
                     -18 disaring (MAF/geno/HWE)
                   </span>
                 )}
               </div>
             </div>
 
-            <div className="rounded-xl bg-surface/50 p-2 text-[11px] text-text-secondary flex items-center justify-between">
+            <div className="rounded-xl bg-slate-100 dark:bg-white/5 p-2.5 text-[11px] text-slate-700 dark:text-slate-300 flex items-center justify-between">
               <span>Sifat fenotipe target:</span>
-              <span className="font-mono font-semibold text-accent-cyan">
+              <span className="font-mono font-semibold text-[#5B4DFE] dark:text-[#06B6D4]">
                 {configParams.trait || uploadSummary?.fenotipe?.sifat_tersedia?.[0] || 'bobot_umbi_g'}
               </span>
             </div>
@@ -331,35 +327,35 @@ export default function Step3Computation({ analysisId, onComplete }) {
           <div
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="rounded-2xl border border-accent-cyan/30 bg-gradient-to-br from-accent-cyan/10 via-surface-elevated/70 to-surface p-4 space-y-3 relative group transition-all"
+            className="rounded-3xl border border-cyan-300 dark:border-[#06B6D4]/30 bg-gradient-to-br from-cyan-50/90 via-white to-slate-50 dark:from-[#06B6D4]/10 dark:via-[#0F172E]/80 dark:to-[#121B38] p-5 space-y-3 relative group transition-all shadow-lg"
           >
-            <div className="flex items-center justify-between border-b border-border-subtle pb-2">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-2.5">
               <div className="flex items-center gap-2">
-                <div className="h-6 w-6 rounded-lg bg-accent-cyan/20 flex items-center justify-center text-accent-cyan">
+                <div className="h-6 w-6 rounded-lg bg-cyan-100 dark:bg-[#06B6D4]/20 flex items-center justify-center text-cyan-800 dark:text-[#06B6D4]">
                   <HelpCircle className="h-3.5 w-3.5" />
                 </div>
-                <span className="text-xs font-bold text-accent-cyan">
+                <span className="text-xs font-bold text-cyan-900 dark:text-[#06B6D4]">
                   Tips Edukatif Riset (FR-10)
                 </span>
               </div>
-              <span className="font-mono text-[10px] text-text-muted">
+              <span className="font-mono text-[10px] text-slate-500 dark:text-slate-400">
                 {tipIndex + 1} / {TIPS_EDUKATIF.length}
               </span>
             </div>
 
             <div className="min-h-[92px] space-y-1">
-              <h6 className="text-xs font-bold text-text-primary">{currentTip.judul}</h6>
-              <p className="text-[11px] text-text-secondary leading-relaxed italic">
+              <h6 className="text-xs font-bold text-slate-900 dark:text-white">{currentTip.judul}</h6>
+              <p className="text-[11px] text-slate-700 dark:text-slate-300 leading-relaxed italic">
                 &ldquo;{currentTip.teks}&rdquo;
               </p>
             </div>
 
             {/* Kontrol Navigasi Manual */}
-            <div className="flex items-center justify-between pt-1 border-t border-border-subtle/60 text-[10px]">
-              <span className="text-text-muted text-[10px]">
+            <div className="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-white/10 text-[10px]">
+              <span className="text-slate-500 dark:text-slate-400 text-[10px]">
                 {isHovered ? 'Rotasi dijeda (hover)' : 'Berotasi otomatis setiap 6s'}
               </span>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1.5">
                 <button
                   type="button"
                   onClick={() =>
@@ -367,7 +363,7 @@ export default function Step3Computation({ analysisId, onComplete }) {
                       (prev) => (prev - 1 + TIPS_EDUKATIF.length) % TIPS_EDUKATIF.length
                     )
                   }
-                  className="rounded-lg border border-border-subtle bg-surface p-1 hover:bg-surface-elevated text-text-primary"
+                  className="rounded-lg border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-white/5 p-1 hover:bg-slate-200 dark:hover:bg-white/10 active:scale-90 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all duration-100"
                   title="Sebelumnya"
                 >
                   <ChevronLeft className="h-3.5 w-3.5" />
@@ -375,7 +371,7 @@ export default function Step3Computation({ analysisId, onComplete }) {
                 <button
                   type="button"
                   onClick={() => setTipIndex((prev) => (prev + 1) % TIPS_EDUKATIF.length)}
-                  className="rounded-lg border border-border-subtle bg-surface p-1 hover:bg-surface-elevated text-text-primary"
+                  className="rounded-lg border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-white/5 p-1 hover:bg-slate-200 dark:hover:bg-white/10 active:scale-90 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all duration-100"
                   title="Berikutnya"
                 >
                   <ChevronRight className="h-3.5 w-3.5" />

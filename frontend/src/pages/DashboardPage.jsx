@@ -7,20 +7,18 @@ import {
   Activity,
   CheckCircle2,
   AlertTriangle,
-  XCircle,
   ArrowRight,
   Sprout,
   Loader2,
   X,
-  FileSpreadsheet,
 } from 'lucide-react';
 import { useAuthStore } from '../store/useAuthStore.js';
 import { analysisService } from '../services/analysisService.js';
 import ErrorMessageArea from '../components/common/ErrorMessageArea.jsx';
 
 /**
- * S-03: DashboardPage (Layar Utama Peneliti)
- * Acuan: docs/gwasena-v2/WIREFRAME.md Layar S-03 & USER_FLOW.md
+ * S-03: DashboardPage (Layar Utama Peneliti - Figma Aligned with Micro-Interactions)
+ * Acuan: 03 — Dashboard (Pengguna Analisis).png & 03 — Dashboard (Pengguna Analisis) (Light).png
  */
 export default function DashboardPage() {
   const navigate = useNavigate();
@@ -78,20 +76,20 @@ export default function DashboardPage() {
   return (
     <div className="space-y-8 animate-fade-in pb-12">
       {/* ── Banner Sambutan Peneliti & Organisme ── */}
-      <div className="relative overflow-hidden rounded-3xl border border-border-strong bg-gradient-to-br from-surface via-surface to-surface-elevated/80 p-6 sm:p-8 shadow-xl backdrop-blur-md">
+      <div className="relative overflow-hidden rounded-3xl border border-slate-300 dark:border-white/10 bg-white/95 dark:bg-[#121B38]/85 p-6 sm:p-8 shadow-xl backdrop-blur-md">
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 rounded-full border border-accent-cyan/30 bg-accent-cyan/10 px-3 py-1 text-xs font-semibold text-accent-cyan">
-              <Sprout className="h-3.5 w-3.5 text-accent-cyan" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-300 dark:border-[#06B6D4]/30 bg-cyan-50 dark:bg-[#06B6D4]/10 px-3 py-1 text-xs font-semibold text-cyan-900 dark:text-[#06B6D4]">
+              <Sprout className="h-3.5 w-3.5 text-cyan-700 dark:text-[#06B6D4]" />
               <span>Studi Kasus Agronomi: Bawang Putih (Allium sativum L.)</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-text-primary">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
               Selamat datang kembali,{' '}
-              <span className="text-accent-cyan">{user?.username || 'Peneliti'}</span>!
+              <span className="text-[#5B4DFE] dark:text-[#06B6D4]">{user?.username || 'Peneliti'}</span>!
             </h1>
 
-            <p className="max-w-2xl text-sm text-text-secondary leading-relaxed">
+            <p className="max-w-2xl text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
               Mulai sesi analisis asosiasi genomik baru atau lanjutkan evaluasi hasil riset terdahulu
               pada genom 8 kromosom bawang putih.
             </p>
@@ -99,15 +97,15 @@ export default function DashboardPage() {
 
           {/* Quick Species Badge */}
           {org && (
-            <div className="shrink-0 rounded-2xl border border-border-subtle bg-surface-elevated/70 p-4 text-xs space-y-1.5 min-w-[220px]">
-              <span className="font-semibold text-text-primary block">Spesimen Aktif:</span>
-              <div className="font-mono text-accent-cyan font-bold italic text-sm">
+            <div className="shrink-0 rounded-2xl border border-slate-300 dark:border-white/10 bg-slate-50 dark:bg-[#0F172E]/70 p-4 text-xs space-y-1.5 min-w-[220px]">
+              <span className="font-semibold text-slate-800 dark:text-white block">Spesimen Aktif:</span>
+              <div className="font-mono text-[#5B4DFE] dark:text-[#06B6D4] font-bold italic text-sm">
                 {org.nama_ilmiah}
               </div>
-              <div className="text-text-muted">
+              <div className="text-slate-600 dark:text-slate-400">
                 {org.ploidi} · {org.jumlah_kromosom} Pasang Kromosom
               </div>
-              <div className="text-[11px] text-text-secondary">
+              <div className="text-[11px] text-slate-500 dark:text-slate-400">
                 Ukuran Genom: {org.ukuran_genom_perkiraan}
               </div>
             </div>
@@ -115,38 +113,44 @@ export default function DashboardPage() {
         </div>
 
         {/* Subtle decorative glow */}
-        <div className="pointer-events-none absolute -right-20 -bottom-20 h-64 w-64 rounded-full bg-accent-cyan/10 blur-3xl" />
+        <div className="pointer-events-none absolute -right-20 -bottom-20 h-64 w-64 rounded-full bg-[#06B6D4]/10 blur-3xl" />
       </div>
 
-      {/* ── Dua Kartu Aksi Utama (Sesuai WIREFRAME.md) ── */}
+      {/* ── Dua Kartu Aksi Utama (Dengan Micro-Interactions: hover lift, tactile press, arrow translate) ── */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Kartu 1: Analisis Baru (Primary CTA) */}
-        <div className="flex flex-col justify-between rounded-3xl border-2 border-accent-primary/40 bg-surface/90 p-6 sm:p-8 shadow-xl hover:border-accent-cyan/60 hover:shadow-accent-cyan/10 transition-all group">
+        {/* Kartu 1: Analisis Baru (Primary CTA Card) */}
+        <div
+          onClick={() => setIsModalOpen(true)}
+          className="flex flex-col justify-between rounded-3xl border border-slate-300 dark:border-[#5B4DFE]/30 bg-white dark:bg-[#121B38]/85 p-6 sm:p-8 shadow-xl hover:border-[#5B4DFE]/70 hover:-translate-y-1 active:scale-[0.985] transition-all duration-150 group cursor-pointer"
+        >
           <div>
             <div className="flex items-center justify-between mb-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent-primary/15 text-accent-primary dark:text-accent-cyan group-hover:scale-105 transition-transform">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#5B4DFE]/15 text-[#5B4DFE] dark:text-[#06B6D4] group-hover:scale-110 transition-transform duration-150">
                 <Dna className="h-6 w-6" />
               </div>
-              <span className="rounded-full bg-accent-primary/10 px-3 py-1 text-xs font-bold text-accent-cyan border border-accent-cyan/20">
+              <span className="rounded-full bg-cyan-50 dark:bg-[#5B4DFE]/15 px-3 py-1 text-xs font-bold text-cyan-800 dark:text-[#06B6D4] border border-cyan-200 dark:border-[#06B6D4]/20">
                 Alur Wizard 6 Langkah
               </span>
             </div>
 
-            <h2 className="text-xl font-bold text-text-primary group-hover:text-accent-cyan transition-colors">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-[#5B4DFE] dark:group-hover:text-[#06B6D4] transition-colors">
               Mulai Analisis GWAS Baru
             </h2>
 
-            <p className="mt-2 text-sm text-text-secondary leading-relaxed">
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
               Jalankan siklus terpadu: unggah VCF & fenotipe CSV, penyaringan Quality Control, kovariat
               PCA otomatis, model GLM/MLM, hingga visualisasi Manhattan Plot interaktif.
             </p>
           </div>
 
-          <div className="mt-6 pt-4 border-t border-border-subtle">
+          <div className="mt-6 pt-4 border-t border-slate-200 dark:border-white/10">
             <button
               type="button"
-              onClick={() => setIsModalOpen(true)}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-accent-primary py-3 px-4 text-sm font-bold text-white shadow-md hover:bg-accent-primary/90 focus:outline-none focus:ring-2 focus:ring-accent-primary/50 transition-all hover:shadow-accent-primary/20"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsModalOpen(true);
+              }}
+              className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#5B4DFE] py-3 px-4 text-sm font-bold text-white shadow-lg shadow-[#5B4DFE]/30 hover:bg-[#4F46E5] hover:shadow-xl active:scale-[0.97] active:brightness-95 transition-all duration-100"
             >
               <PlusCircle className="h-4 w-4" />
               <span>+ Inisiasi Sesi Analisis Baru</span>
@@ -155,109 +159,115 @@ export default function DashboardPage() {
         </div>
 
         {/* Kartu 2: Riwayat Analisis */}
-        <div className="flex flex-col justify-between rounded-3xl border border-border-strong bg-surface/90 p-6 sm:p-8 shadow-xl hover:border-border-strong/80 transition-all group">
+        <div
+          onClick={() => navigate('/history')}
+          className="flex flex-col justify-between rounded-3xl border border-slate-300 dark:border-white/10 bg-white dark:bg-[#121B38]/85 p-6 sm:p-8 shadow-xl hover:border-slate-400 dark:hover:border-white/20 hover:-translate-y-1 active:scale-[0.985] transition-all duration-150 group cursor-pointer"
+        >
           <div>
             <div className="flex items-center justify-between mb-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-surface-elevated text-text-secondary group-hover:text-text-primary group-hover:scale-105 transition-all">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 dark:bg-[#162142] text-slate-700 dark:text-slate-300 group-hover:scale-110 transition-transform duration-150">
                 <History className="h-6 w-6" />
               </div>
-              <span className="text-xs font-medium text-text-muted">
+              <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
                 Riwayat Tersimpan (FR-12)
               </span>
             </div>
 
-            <h2 className="text-xl font-bold text-text-primary group-hover:text-accent-primary dark:group-hover:text-accent-cyan transition-colors">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white group-hover:text-[#5B4DFE] dark:group-hover:text-[#06B6D4] transition-colors">
               Buka Riwayat Analisis
             </h2>
 
-            <p className="mt-2 text-sm text-text-secondary leading-relaxed">
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
               Akses kembali sesi analisis terdahulu, tinjau tabel SNP signifikan, periksa log
               komputasi, atau unduh ringkasan laporan PDF dan gambar plot publikasi.
             </p>
           </div>
 
-          <div className="mt-6 pt-4 border-t border-border-subtle">
+          <div className="mt-6 pt-4 border-t border-slate-200 dark:border-white/10">
             <button
               type="button"
-              onClick={() => navigate('/history')}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-border-strong bg-surface-elevated py-3 px-4 text-sm font-semibold text-text-primary hover:bg-surface hover:border-text-secondary transition-all"
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate('/history');
+              }}
+              className="w-full inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-[#162142] py-3 px-4 text-sm font-semibold text-slate-800 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-[#1E2C58] hover:shadow-md active:scale-[0.97] active:brightness-95 transition-all duration-100"
             >
               <span>Buka Daftar Riwayat Analisis</span>
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-1.5" />
             </button>
           </div>
         </div>
       </div>
 
       {/* ── Panel Status Infrastruktur Ringkas ── */}
-      <div className="rounded-2xl border border-border-subtle bg-surface/60 p-5 backdrop-blur-sm">
+      <div className="rounded-2xl border border-slate-300 dark:border-white/10 bg-white dark:bg-[#121B38]/60 p-5 backdrop-blur-sm shadow-sm">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <Activity className="h-4 w-4 text-accent-cyan" />
-            <h3 className="text-xs font-bold uppercase tracking-wider text-text-muted">
+            <Activity className="h-4 w-4 text-[#06B6D4]" />
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-400">
               Kesiapan Infrastruktur Komputasi
             </h3>
           </div>
-          <span className="text-[11px] text-text-muted">
+          <span className="text-[11px] text-slate-600 dark:text-slate-400">
             Status: {isHealthy ? 'Optimal' : 'Memeriksa...'}
           </span>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {/* API Backend */}
-          <div className="flex items-center gap-3 rounded-xl border border-border-subtle bg-surface p-3 text-xs">
-            <CheckCircle2 className="h-4 w-4 text-status-success shrink-0" />
+          <div className="flex items-center gap-3 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172E]/70 p-3 text-xs">
+            <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
             <div>
-              <span className="font-semibold text-text-primary block">FastAPI Engine</span>
-              <span className="text-[11px] text-text-muted">REST API v0.1.1 Siap</span>
+              <span className="font-semibold text-slate-900 dark:text-white block">FastAPI Engine</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400">REST API v0.1.1 Siap</span>
             </div>
           </div>
 
           {/* Database PostgreSQL */}
-          <div className="flex items-center gap-3 rounded-xl border border-border-subtle bg-surface p-3 text-xs">
+          <div className="flex items-center gap-3 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172E]/70 p-3 text-xs">
             {health?.components?.database?.ok ? (
-              <CheckCircle2 className="h-4 w-4 text-status-success shrink-0" />
+              <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
             ) : (
-              <AlertTriangle className="h-4 w-4 text-status-warning shrink-0" />
+              <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0" />
             )}
             <div>
-              <span className="font-semibold text-text-primary block">PostgreSQL 16</span>
-              <span className="text-[11px] text-text-muted">
+              <span className="font-semibold text-slate-900 dark:text-white block">PostgreSQL 16</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400">
                 {health?.components?.database?.tables?.length || 12} Tabel Terindeks
               </span>
             </div>
           </div>
 
           {/* Celery & Redis */}
-          <div className="flex items-center gap-3 rounded-xl border border-border-subtle bg-surface p-3 text-xs">
+          <div className="flex items-center gap-3 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172E]/70 p-3 text-xs">
             {health?.components?.redis?.ok ? (
-              <CheckCircle2 className="h-4 w-4 text-status-success shrink-0" />
+              <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
             ) : (
-              <AlertTriangle className="h-4 w-4 text-status-warning shrink-0" />
+              <AlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0" />
             )}
             <div>
-              <span className="font-semibold text-text-primary block">Celery & Redis</span>
-              <span className="text-[11px] text-text-muted">Antrean Tugas Asinkron</span>
+              <span className="font-semibold text-slate-900 dark:text-white block">Celery & Redis</span>
+              <span className="text-[11px] text-slate-500 dark:text-slate-400">Antrean Tugas Asinkron</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ── Modal Dialog Inisiasi Analisis Baru ── */}
+      {/* ── Modal Dialog Inisiasi Analisis Baru (Dengan Modal Scale-in & Backdrop Fade) ── */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
-          <div className="w-full max-w-lg rounded-2xl border border-border-strong bg-surface p-6 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-border-subtle pb-3">
+          <div className="w-full max-w-lg rounded-3xl border border-slate-300 dark:border-white/15 bg-white dark:bg-[#121B38] p-6 sm:p-7 shadow-2xl space-y-4 animate-modal-in">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-white/10 pb-3.5">
               <div className="flex items-center gap-2">
-                <Dna className="h-5 w-5 text-accent-cyan" />
-                <h3 className="text-lg font-bold text-text-primary">
+                <Dna className="h-5 w-5 text-[#5B4DFE] dark:text-[#06B6D4]" />
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">
                   Inisiasi Sesi Analisis Baru
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}
-                className="rounded-lg p-1 text-text-muted hover:bg-surface-elevated hover:text-text-primary"
+                className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 dark:hover:bg-white/10 hover:text-slate-700 dark:hover:text-white active:scale-95 transition-all"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -269,7 +279,7 @@ export default function DashboardPage() {
               <div>
                 <label
                   htmlFor="analysisName"
-                  className="block text-xs font-semibold uppercase tracking-wider text-text-secondary mb-1.5"
+                  className="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5"
                 >
                   Nama Sesi Analisis
                 </label>
@@ -280,33 +290,33 @@ export default function DashboardPage() {
                   value={analysisName}
                   onChange={(e) => setAnalysisName(e.target.value)}
                   placeholder="Contoh: GWAS Bobot Umbi Bawang Putih 2026"
-                  className="w-full rounded-xl border border-border-subtle bg-surface-elevated py-2.5 px-3.5 text-sm text-text-primary placeholder:text-text-muted focus:border-accent-cyan focus:outline-none focus:ring-1 focus:ring-accent-cyan"
+                  className="w-full rounded-xl border border-slate-300 dark:border-white/10 bg-[#F1F4FD] dark:bg-[#0F172E] py-2.5 px-3.5 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-[#5B4DFE] focus:outline-none focus:ring-1 focus:ring-[#5B4DFE] font-medium"
                 />
-                <span className="mt-1 block text-[11px] text-text-muted">
+                <span className="mt-1 block text-[11px] text-slate-500 dark:text-slate-400">
                   Beri nama deskriptif sesuai sifat agronomi atau aksesi kultivar yang diuji.
                 </span>
               </div>
 
-              <div className="rounded-xl border border-border-subtle bg-surface-elevated/50 p-3 text-xs text-text-secondary space-y-1">
-                <div className="font-semibold text-text-primary">Tahap Berikutnya:</div>
+              <div className="rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#0F172E]/60 p-3.5 text-xs text-slate-600 dark:text-slate-300 space-y-1">
+                <div className="font-semibold text-slate-800 dark:text-white">Tahap Berikutnya:</div>
                 <p>
                   Setelah sesi dibuat, Anda akan diarahkan ke <strong>Langkah 1 (Unggah Data)</strong> untuk memilih berkas genotipe (.vcf / .vcf.gz) dan fenotipe (.csv).
                 </p>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-border-subtle">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200 dark:border-white/10">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
                   disabled={isSubmitting}
-                  className="rounded-xl border border-border-subtle px-4 py-2.5 text-xs font-semibold text-text-secondary hover:bg-surface-elevated hover:text-text-primary"
+                  className="rounded-xl border border-slate-300 dark:border-white/10 bg-slate-100 dark:bg-transparent px-4 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-white/5 active:scale-[0.97] transition-all"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting || !analysisName.trim()}
-                  className="inline-flex items-center gap-2 rounded-xl bg-accent-primary px-5 py-2.5 text-xs font-bold text-white shadow-md hover:bg-accent-primary/90 disabled:opacity-60"
+                  className="inline-flex items-center gap-2 rounded-xl bg-[#5B4DFE] px-5 py-2.5 text-xs font-bold text-white shadow-lg shadow-[#5B4DFE]/30 hover:bg-[#4F46E5] hover:-translate-y-[1px] hover:shadow-xl active:scale-[0.97] active:brightness-95 disabled:opacity-60 disabled:transform-none transition-all duration-100"
                 >
                   {isSubmitting ? (
                     <>

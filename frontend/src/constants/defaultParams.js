@@ -32,32 +32,32 @@ export const QC_PARAM_RANGES = {
 export const ANALYSIS_STATUSES = {
   draft: {
     label: 'Draft',
-    badgeClass: 'bg-surface-elevated text-text-muted border-border-subtle',
+    badgeClass: 'bg-slate-100 text-slate-700 border-slate-300 dark:bg-surface-elevated dark:text-text-muted dark:border-border-subtle',
     color: '#64748B',
   },
   tervalidasi: {
     label: 'Tervalidasi',
-    badgeClass: 'bg-emerald-500/10 text-status-success border-emerald-500/20',
+    badgeClass: 'bg-emerald-100 text-emerald-800 border-emerald-300 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30',
     color: '#10B981',
   },
   antre: {
     label: 'Dalam Antrean',
-    badgeClass: 'bg-amber-500/10 text-status-warning border-amber-500/20',
+    badgeClass: 'bg-amber-100 text-amber-900 border-amber-300 dark:bg-amber-500/15 dark:text-amber-300 dark:border-amber-500/30',
     color: '#F59E0B',
   },
   berjalan: {
     label: 'Sedang Berjalan',
-    badgeClass: 'bg-cyan-500/10 text-accent-cyan border-cyan-500/20',
+    badgeClass: 'bg-cyan-100 text-cyan-900 border-cyan-300 dark:bg-cyan-500/15 dark:text-cyan-300 dark:border-cyan-500/30',
     color: '#06B6D4',
   },
   selesai: {
     label: 'Selesai',
-    badgeClass: 'bg-emerald-500/10 text-status-success border-emerald-500/20',
+    badgeClass: 'bg-emerald-100 text-emerald-800 border-emerald-300 dark:bg-emerald-500/15 dark:text-emerald-300 dark:border-emerald-500/30',
     color: '#10B981',
   },
   gagal: {
     label: 'Gagal',
-    badgeClass: 'bg-rose-500/10 text-status-error border-rose-500/20',
+    badgeClass: 'bg-rose-100 text-rose-900 border-rose-300 dark:bg-rose-500/15 dark:text-rose-300 dark:border-rose-500/30',
     color: '#EF4444',
   },
 };

@@ -34,7 +34,7 @@ export default function QQPlot({ qqData = [], lambdaGc = 1.024 }) {
       ),
       marker: {
         size: 5,
-        color: isDark ? '#38BDF8' : '#0284C7', // Sky
+        color: isDark ? '#38BDF8' : '#2563EB', // Royal Blue
         opacity: 0.8,
       },
     };
@@ -68,7 +68,7 @@ export default function QQPlot({ qqData = [], lambdaGc = 1.024 }) {
         font: {
           family: 'Plus Jakarta Sans, sans-serif',
           size: 11,
-          color: isDark ? '#94A3B8' : '#475569',
+          color: isDark ? '#94A3B8' : '#1E293B',
         },
       },
       xaxis: {
@@ -77,17 +77,18 @@ export default function QQPlot({ qqData = [], lambdaGc = 1.024 }) {
           font: {
             family: 'Plus Jakarta Sans, sans-serif',
             size: 12,
-            color: isDark ? '#94A3B8' : '#64748B',
+            color: isDark ? '#94A3B8' : '#1E293B',
           },
         },
         range: [0, maxVal],
         tickfont: {
           family: 'JetBrains Mono, monospace',
           size: 11,
-          color: isDark ? '#E2E8F0' : '#334155',
+          color: isDark ? '#E2E8F0' : '#1E293B',
         },
         showgrid: true,
         gridcolor: isDark ? '#1E293B' : '#E2E8F0',
+        linecolor: isDark ? '#334155' : '#94A3B8',
         zeroline: false,
       },
       yaxis: {
@@ -96,17 +97,18 @@ export default function QQPlot({ qqData = [], lambdaGc = 1.024 }) {
           font: {
             family: 'Plus Jakarta Sans, sans-serif',
             size: 12,
-            color: isDark ? '#94A3B8' : '#64748B',
+            color: isDark ? '#94A3B8' : '#1E293B',
           },
         },
         range: [0, maxVal],
         tickfont: {
           family: 'JetBrains Mono, monospace',
           size: 11,
-          color: isDark ? '#E2E8F0' : '#334155',
+          color: isDark ? '#E2E8F0' : '#1E293B',
         },
         showgrid: true,
         gridcolor: isDark ? '#1E293B' : '#E2E8F0',
+        linecolor: isDark ? '#334155' : '#94A3B8',
         zeroline: false,
       },
       annotations: [
@@ -115,10 +117,10 @@ export default function QQPlot({ qqData = [], lambdaGc = 1.024 }) {
           yref: 'paper',
           x: 0.05,
           y: 0.95,
-          text: `<b>λ_GC = ${lambdaGc.toFixed(3)}</b><br><span style="font-size:10px;color:${isDark ? '#94A3B8' : '#64748B'}">Terkontrol Baik (&lt; 1.05)</span>`,
+          text: `<b>λ_GC = ${lambdaGc.toFixed(3)}</b><br><span style="font-size:10px;color:${isDark ? '#94A3B8' : '#475569'}">Terkontrol Baik (&lt; 1.05)</span>`,
           showarrow: false,
           align: 'left',
-          bgcolor: isDark ? 'rgba(30, 41, 59, 0.85)' : 'rgba(241, 245, 249, 0.85)',
+          bgcolor: isDark ? 'rgba(30, 41, 59, 0.85)' : '#FFFFFF',
           bordercolor: isDark ? '#334155' : '#CBD5E1',
           borderwidth: 1,
           borderpad: 6,
@@ -160,7 +162,7 @@ export default function QQPlot({ qqData = [], lambdaGc = 1.024 }) {
   }, [qqData, lambdaGc, theme]);
 
   return (
-    <div className="w-full overflow-hidden rounded-2xl border border-border-subtle bg-surface p-2 sm:p-4 shadow-sm">
+    <div className="w-full overflow-hidden rounded-2xl border border-slate-300 dark:border-white/10 bg-white dark:bg-[#0F172E] p-2 sm:p-4 shadow-sm">
       <div ref={containerRef} className="h-[380px] w-full" />
     </div>
   );

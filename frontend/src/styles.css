@@ -2,20 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-/* GWASena 2.0 — Precision Bioluminescence & Editorial Science Design System */
+/* GWASena 2.0 — Precision Bioluminescence & Figma Design Tokens */
 
-/* ── Dark Mode (Default) ── */
+/* ── Dark Mode (Default Figma Cosmic Purple-Indigo-Blue) ── */
 :root {
-  --bg-background: #070B14;
-  --bg-surface: #0F172A;
-  --bg-surface-elevated: #1E293B;
-  --bg-surface-glass: rgba(15, 23, 42, 0.72);
-  --border-subtle: #1E293B;
-  --border-strong: #334155;
-  --text-primary: #F8FAFC;
+  --bg-background: #121634;
+  --bg-gradient: linear-gradient(135deg, #1E1346 0%, #151846 45%, #0F1D4A 75%, #0B132C 100%);
+  --bg-surface: rgba(18, 27, 56, 0.78);
+  --bg-surface-elevated: #0F172E;
+  --bg-surface-glass: rgba(18, 27, 56, 0.85);
+  --border-subtle: rgba(255, 255, 255, 0.10);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --text-primary: #FFFFFF;
   --text-secondary: #94A3B8;
   --text-muted: #64748B;
-  --accent-primary: #0284C7;
+  --accent-primary: #5B4DFE;
   --accent-cyan: #06B6D4;
   --accent-indigo: #6366F1;
   --status-success: #10B981;
@@ -23,18 +24,19 @@
   --status-error: #EF4444;
 }
 
-/* ── Light Mode ── */
+/* ── Light Mode (Figma Soft Lavender-Sky) ── */
 .light {
-  --bg-background: #F8FAFC;
+  --bg-background: #F3F6FD;
+  --bg-gradient: linear-gradient(135deg, #EAE6FD 0%, #EFF3FE 50%, #DCE8FD 100%);
   --bg-surface: #FFFFFF;
-  --bg-surface-elevated: #F1F5F9;
-  --bg-surface-glass: rgba(255, 255, 255, 0.82);
+  --bg-surface-elevated: #F1F4FD;
+  --bg-surface-glass: rgba(255, 255, 255, 0.90);
   --border-subtle: #E2E8F0;
   --border-strong: #CBD5E1;
   --text-primary: #0F172A;
-  --text-secondary: #475569;
+  --text-secondary: #334155;
   --text-muted: #64748B;
-  --accent-primary: #0369A1;
+  --accent-primary: #5B4DFE;
   --accent-cyan: #0891B2;
   --accent-indigo: #4F46E5;
   --status-success: #059669;
@@ -44,27 +46,32 @@
 
 @layer base {
   body {
-    @apply bg-background text-text-primary font-sans antialiased;
-    margin: 0;
+    background: var(--bg-gradient);
+    background-color: var(--bg-background);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
     min-height: 100vh;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
   }
 
   * {
     box-sizing: border-box;
   }
 
-  /* Explicit base styles for form inputs to guarantee high contrast across all browsers & themes */
-  input, select, textarea {
-    color: var(--text-primary) !important;
-    background-color: var(--bg-surface-elevated) !important;
+  /* Form inputs styling */
+  input:not([type="checkbox"]):not([type="radio"]), select, textarea {
+    color: var(--text-primary);
+    background-color: var(--bg-surface-elevated);
   }
 
   input::placeholder, textarea::placeholder {
-    color: var(--text-muted) !important;
+    color: var(--text-muted);
     opacity: 0.85;
   }
 
-  /* Fix browser autofill override that turns background white and text invisible */
+  /* Fix browser autofill */
   input:-webkit-autofill,
   input:-webkit-autofill:hover, 
   input:-webkit-autofill:focus, 
@@ -73,6 +80,34 @@
     -webkit-box-shadow: 0 0 0 1000px var(--bg-surface-elevated) inset !important;
     box-shadow: 0 0 0 1000px var(--bg-surface-elevated) inset !important;
     transition: background-color 5000s ease-in-out 0s;
+  }
+}
+
+@layer components {
+  /* ── Figma Design Utility Classes ── */
+  .figma-card {
+    @apply rounded-3xl border border-slate-300 dark:border-white/10 bg-white/95 dark:bg-[#121B38]/85 backdrop-blur-md shadow-xl transition-all;
+  }
+
+  .figma-input {
+    @apply rounded-xl border border-slate-300 dark:border-white/10 bg-[#F1F4FD] dark:bg-[#0F172E] text-slate-900 dark:text-white placeholder:text-slate-500 focus:border-[#5B4DFE] focus:outline-none focus:ring-1 focus:ring-[#5B4DFE] transition-all;
+  }
+
+  /* Tactile Buttons with Micro-Interactions (80ms click press, 120ms hover lift) */
+  .figma-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-[#5B4DFE] px-4 py-2.5 text-xs sm:text-sm font-bold text-white shadow-md hover:bg-[#4F46E5] hover:-translate-y-[1px] hover:shadow-lg active:scale-[0.97] active:brightness-95 transition-all duration-100 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none;
+  }
+
+  .figma-btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 dark:border-white/10 bg-[#EEF2F6] dark:bg-[#162142] px-4 py-2.5 text-xs sm:text-sm font-semibold text-slate-800 dark:text-white shadow-sm hover:bg-slate-200 dark:hover:bg-[#1E2C58] hover:-translate-y-[1px] hover:shadow-md active:scale-[0.97] active:brightness-95 transition-all duration-100 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-none;
+  }
+
+  .btn-tactile {
+    @apply transition-all duration-100 hover:-translate-y-[1px] active:scale-[0.97] active:brightness-95 disabled:transform-none disabled:shadow-none;
+  }
+
+  .figma-pill-stepper {
+    @apply flex items-center justify-between rounded-2xl border border-slate-300 dark:border-white/10 bg-white dark:bg-[#121B38]/90 px-6 py-3.5 backdrop-blur-md shadow-lg;
   }
 }
 
@@ -102,20 +137,41 @@
   background: var(--text-muted);
 }
 
-/* Reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* Custom animations */
+/* Custom animations with GPU acceleration */
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: scale(0.95) translateY(6px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes dropdown-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fade-down {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes highlight-glow {
+  0% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0.7); border-color: rgba(6, 182, 212, 0.9); }
+  50% { box-shadow: 0 0 16px 4px rgba(6, 182, 212, 0.4); border-color: rgba(6, 182, 212, 0.8); }
+  100% { box-shadow: 0 0 0 0 rgba(6, 182, 212, 0); }
 }
 
 @keyframes pulse-ring {
@@ -128,6 +184,40 @@
   animation: fade-in 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+.animate-step-transition {
+  animation: slide-up 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-pop-in {
+  animation: pop-in 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-modal-in {
+  animation: modal-in 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-dropdown-in {
+  animation: dropdown-in 150ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-fade-down {
+  animation: fade-down 200ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-glow-brief {
+  animation: highlight-glow 500ms ease-out 1;
+}
+
 .animate-pulse-ring {
   animation: pulse-ring 1.8s ease-in-out infinite;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

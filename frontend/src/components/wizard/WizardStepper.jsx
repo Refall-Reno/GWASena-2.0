@@ -2,8 +2,8 @@ import { Check, Lock } from 'lucide-react';
 import { WIZARD_STEPS } from '../../constants/defaultParams.js';
 
 /**
- * WizardStepper - Indikator Progres 6 Langkah GWASena
- * Acuan: docs/gwasena-v2/WIREFRAME.md & USER_FLOW.md
+ * WizardStepper - Indikator Progres 6 Langkah GWASena 2.0 (Figma Design Aligned)
+ * Acuan: 04c — Unggah_ Valid (Boleh Lanjut).png & 06 — Komputasi_ QC Berjalan.png
  * Mematuhi aturan penguncian saat komputasi (BR-05) dan navigasi bebas pasca-selesai (DEC-07).
  */
 export default function WizardStepper({ activeStep, onStepClick, status }) {
@@ -25,99 +25,106 @@ export default function WizardStepper({ activeStep, onStepClick, status }) {
   };
 
   return (
-    <div className="w-full">
-      {/* ── Tampilan Mobile (< 768px): Indikator Ringkas ── */}
-      <div className="md:hidden rounded-2xl border border-border-subtle bg-surface p-4 space-y-2">
+    <div className="w-full space-y-2">
+      {/* ── Tampilan Mobile (< 1024px): Indikator Ringkas ── */}
+      <div className="lg:hidden rounded-2xl border border-slate-300 dark:border-white/10 bg-white/95 dark:bg-[#121B38]/90 p-4 shadow-lg backdrop-blur-md space-y-2">
         <div className="flex items-center justify-between text-xs">
-          <span className="font-semibold text-accent-cyan">
-            Langkah {activeStep} dari 6
+          <span className="font-bold text-[#5B4DFE] dark:text-[#22D3EE]">
+            Langkah {activeStep} dari 6: {WIZARD_STEPS[activeStep - 1]?.label}
           </span>
-          <span className="text-text-muted font-medium">
-            {WIZARD_STEPS[activeStep - 1]?.label}
+          <span className="text-slate-600 dark:text-slate-400 text-[11px] font-mono">
+            {Math.round((activeStep / 6) * 100)}%
           </span>
         </div>
-        <div className="h-2 w-full rounded-full bg-surface-elevated overflow-hidden">
+        <div className="h-2 w-full rounded-full bg-slate-200 dark:bg-white/10 overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-accent-primary to-accent-cyan transition-all duration-300"
+            className="h-full bg-gradient-to-r from-[#5B4DFE] to-[#06B6D4] transition-all duration-300"
             style={{ width: `${(activeStep / 6) * 100}%` }}
           />
         </div>
       </div>
 
-      {/* ── Tampilan Desktop (>= 768px): Stepper Horizontal ── */}
-      <ol
-        className="hidden md:flex items-center justify-between w-full rounded-2xl border border-border-subtle bg-surface/90 p-3 shadow-sm backdrop-blur-md"
-        aria-label="Tahapan Analisis GWAS"
-      >
-        {WIZARD_STEPS.map((s, idx) => {
-          const stepNum = s.step;
-          const isActive = activeStep === stepNum;
-          const isCompleted = stepNum < activeStep || (isFinished && stepNum <= 3);
-          const clickable = isStepClickable(stepNum);
+      {/* ── Tampilan Desktop (>= 1024px): Pill Stepper Horizontal Bersatu ── */}
+      <div className="hidden lg:block w-full rounded-2xl border border-slate-300 dark:border-white/10 bg-white/95 dark:bg-[#121B38]/90 px-5 py-3.5 backdrop-blur-md shadow-xl">
+        <ol className="flex items-center justify-between w-full" aria-label="Tahapan Analisis GWAS">
+          {WIZARD_STEPS.map((s, idx) => {
+            const stepNum = s.step;
+            const isActive = activeStep === stepNum;
+            const isCompleted = stepNum < activeStep || (isFinished && stepNum <= 3);
+            const clickable = isStepClickable(stepNum);
 
-          return (
-            <li key={s.id} className="flex-1 flex items-center">
-              <button
-                type="button"
-                disabled={!clickable}
-                onClick={() => clickable && onStepClick?.(stepNum)}
-                className={`group flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs transition-all w-full text-left ${
-                  isActive
-                    ? 'bg-accent-primary/10 text-text-primary font-bold shadow-sm'
-                    : clickable
-                    ? 'hover:bg-surface-elevated text-text-secondary cursor-pointer'
-                    : 'opacity-40 cursor-not-allowed text-text-muted'
-                }`}
-              >
-                {/* Lingkaran Angka / Icon */}
-                <div
-                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-all ${
+            return (
+              <li key={s.id} className="flex-1 flex items-center last:flex-none">
+                <button
+                  type="button"
+                  disabled={!clickable}
+                  onClick={() => clickable && onStepClick?.(stepNum)}
+                  className={`group inline-flex items-center gap-2 px-2.5 py-1.5 rounded-xl text-xs transition-all text-left ${
                     isActive
-                      ? 'bg-accent-primary text-white shadow-md shadow-accent-primary/30 ring-2 ring-accent-cyan/40'
-                      : isCompleted
-                      ? 'bg-status-success/20 text-status-success border border-status-success/40'
-                      : isLockedDuringCompute
-                      ? 'bg-surface-elevated text-text-muted border border-border-subtle'
-                      : 'bg-surface-elevated text-text-secondary border border-border-subtle group-hover:border-text-secondary'
+                      ? 'font-bold cursor-default bg-cyan-50/90 dark:bg-[#06B6D4]/15 border border-cyan-200 dark:border-cyan-500/30'
+                      : clickable
+                      ? 'hover:bg-slate-100 dark:hover:bg-white/5 active:scale-95 transition-all duration-100 cursor-pointer'
+                      : 'opacity-50 cursor-not-allowed'
                   }`}
                 >
-                  {isCompleted && !isActive ? (
-                    <Check className="h-3.5 w-3.5 stroke-[2.5]" />
-                  ) : isLockedDuringCompute && stepNum !== activeStep ? (
-                    <Lock className="h-3 w-3" />
-                  ) : (
-                    <span>{stepNum}</span>
-                  )}
-                </div>
-
-                {/* Label Step */}
-                <div className="flex flex-col min-w-0">
-                  <span
-                    className={`truncate text-xs ${
+                  {/* Circle Indicator */}
+                  <div
+                    className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs transition-all ${
                       isActive
-                        ? 'text-accent-cyan font-bold'
+                        ? 'bg-[#06B6D4] text-white dark:text-[#0B132C] font-extrabold ring-4 ring-[#06B6D4]/25 shadow-md shadow-[#06B6D4]/30'
                         : isCompleted
-                        ? 'text-text-primary font-medium'
-                        : 'text-text-muted'
+                        ? 'bg-emerald-600 dark:bg-[#5B4DFE] text-white shadow-sm'
+                        : isLockedDuringCompute
+                        ? 'bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/15 text-slate-500 dark:text-slate-400'
+                        : 'bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/15 text-slate-600 dark:text-slate-400 group-hover:border-slate-400'
+                    }`}
+                  >
+                    {isCompleted && !isActive ? (
+                      <Check className="h-3.5 w-3.5 stroke-[3]" />
+                    ) : isLockedDuringCompute && stepNum !== activeStep ? (
+                      <Lock className="h-3 w-3 text-slate-500 dark:text-slate-400" />
+                    ) : (
+                      <span>{stepNum}</span>
+                    )}
+                  </div>
+
+                  {/* Label Step */}
+                  <span
+                    className={`whitespace-nowrap text-xs tracking-tight ${
+                      isActive
+                        ? 'text-slate-900 dark:text-[#22D3EE] font-bold'
+                        : isCompleted
+                        ? 'text-emerald-700 dark:text-slate-200 font-semibold'
+                        : 'text-slate-600 dark:text-slate-400 font-normal'
                     }`}
                   >
                     {s.label}
                   </span>
-                </div>
-              </button>
+                </button>
 
-              {/* Garis Penghubung antar Step */}
-              {idx < WIZARD_STEPS.length - 1 && (
-                <div
-                  className={`h-0.5 w-4 shrink-0 mx-1 rounded-full ${
-                    stepNum < activeStep ? 'bg-status-success/50' : 'bg-border-subtle'
-                  }`}
-                />
-              )}
-            </li>
-          );
-        })}
-      </ol>
+                {/* Connecting Line Between Steps */}
+                {idx < WIZARD_STEPS.length - 1 && (
+                  <div
+                    className={`h-[2px] flex-1 mx-2.5 rounded-full transition-colors ${
+                      stepNum < activeStep || (isFinished && stepNum <= 3)
+                        ? 'bg-gradient-to-r from-[#5B4DFE] to-[#06B6D4]'
+                        : 'bg-slate-200 dark:bg-white/10'
+                    }`}
+                  />
+                )}
+              </li>
+            );
+          })}
+        </ol>
+
+        {/* Banner Kunci Selama Komputasi (BR-05) */}
+        {isLockedDuringCompute && (
+          <div className="mt-2.5 flex items-center justify-center gap-2 rounded-xl bg-amber-50 dark:bg-amber-500/10 border border-amber-300 dark:border-amber-500/20 px-3 py-1.5 text-xs text-amber-900 dark:text-amber-300">
+            <Lock className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
+            <span>Langkah lain terkunci selama komputasi berjalan (Aturan Integritas Data BR-05)</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -20,10 +20,27 @@ export default {
         'status-success': 'var(--status-success)',
         'status-warning': 'var(--status-warning)',
         'status-error': 'var(--status-error)',
+        // Figma Design Tokens
+        figma: {
+          primary: '#5B4DFE',
+          'primary-hover': '#4F46E5',
+          'dark-bg': '#131838',
+          'dark-card': '#121B38',
+          'dark-input': '#0F172E',
+          'dark-btn': '#162142',
+          'light-bg': '#F3F6FD',
+          'light-card': '#FFFFFF',
+          'light-input': '#F1F4FD',
+          'light-btn': '#EEF2F6',
+        },
       },
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', '"Fira Code"', 'monospace'],
+      },
+      borderRadius: {
+        '2xl': '16px',
+        '3xl': '24px',
       },
     },
   },
